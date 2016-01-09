@@ -1,0 +1,22 @@
+{
+  "name": "eventinator",
+  "version": "1.0.0",
+  "description": "A web app for creating and viewing events",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heathshurtleff/eventinator.git"
+  },
+  "author": "Heath Shurtleff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heathshurtleff/eventinator/issues"
+  },
+  "homepage": "https://github.com/heathshurtleff/eventinator#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0"
+  }
+}
