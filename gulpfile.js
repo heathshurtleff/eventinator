@@ -9,7 +9,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
 gulp.task('default', ['vendorcss', 'vendorjs'], function() {
-	console.log('it works!');
+	
 });
 
 gulp.task('serve', function() {
