@@ -1,7 +1,6 @@
 /*eslint-env node */
 
 var express = require('express');
-var lr = require('connect-livereload');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var session = require('express-session');
@@ -17,6 +16,7 @@ module.exports = function(app, config) {
 	app.use(passport.initialize());
 	app.use(passport.session());
 	if(process.env.NODE_ENV === 'development') {
+		var lr = require('connect-livereload');
 		app.use(lr({port: 35729}));
 	}
 	app.use(express.static(config.rootPath + '/public'));
