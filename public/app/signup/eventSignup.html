@@ -1,0 +1,46 @@
+<h1 class="event-signup-h1">Sign Up to Create Events</h1>
+<form id="eventSignUpForm">
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label class="control-label" for="name">Full Name</label>
+			<input id="name" type="text" class="form-control" required placeholder="John Doe" autocomplete="name" aria-describedby="nameStatus" ng-model="fullName">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+			<span id="nameStatus" class="sr-only">Status</span>
+		</div>
+	</div>
+	<div class="form-group col-sm-6">
+		<label for="lastName">Email Address</label>
+		<input id="email" type="email" class="form-control" required placeholder="your@email.com" autocomplete="email" ng-model="email">
+	</div>
+	<div class="form-group col-sm-6">
+		<label for="name">Password</label>
+		<input id="name" type="password" class="form-control" required ng-model="password">
+	</div>
+	<div class="form-group col-sm-6">
+		<label for="lastName">Confirm Password</label>
+		<input id="email" type="password" class="form-control" required>
+	</div>
+	<div class="password-disclaimer col-sm-6">
+		Password Requirements: Must be at least 8 characters, contain both lowercase and uppercase letters, a number, and punctuation.
+	</div>
+	<h4>Additional Information (optional)</h4>
+	<div class="form-group col-sm-6">
+		<label for="company">Company</label>
+		<input id="company" type="text" class="form-control" autocomplete="organization" ng-model="company">
+	</div>
+	<div class="form-group col-sm-6">
+		<label for="jobTitle">Job Title</label>
+		<input id="jobTitle" type="text" class="form-control" autocomplete="organization-title" ng-model="job">
+	</div>
+	<div class="form-group col-sm-3">
+		<label for="bDay">Birthday</label>
+		<input id="bDay" type="date" class="form-control" autocomplete="bday" ng-model="bday">
+	</div>
+	<div class="form-group col-sm-9">
+		<label for="address">Home Address</label>
+		<input id="address" type="text" class="form-control" autocomplete="off" ng-model="homeAddress">
+	</div>
+	<div class="form-group col-sm-2">
+		<button type="submit" class="btn btn-success" ng-click="eventSignup()">Sign Up</button>
+	</div>
+</form>

@@ -2,19 +2,55 @@
 <html>
 	<head>
 		<title>Eventinator</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no">
 		<link rel="stylesheet" href="css/vendor/bootstrap.min.css">
 		<link rel="stylesheet" href="css/eventinator.min.css">
 	</head>
 	<body ng-app="eventinator" ng-controller="eventinatorCtrl">
-		<div class="container">
-			<h1>Welcome to the Eventinator!</h1>
-			<p>This is all of the events! Don't you like them? You better! Yay!</p>
-			<h2>{{testVar}}</h2>
+		<div class="navbar navbar-default">
+			<div class="container">
+				<a href="#" class="navbar-brand"><i class="glyphicon glyphicon-calendar"></i> Eventinator</a>
+				<div class="nav navbar-nav navbar-right">
+					<li class="dropdown" ng-hide="identity.authenticated()">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Sign In</a>
+						<div class="dropdown-menu sign-in-menu">
+							<form class="navbar-form">
+								<label for="signInEmail">Email Address</label>
+								<input id="signInEmail" type="email" class="form-control" placeholder="your@email.com" autocomplete="email">
+								<label for="signInPassword">Password</label>
+								<input id="signInPassword" type="password" class="form-control">
+								<button type="submit" class="btn btn-success" disabled="disabled">Submit</button>
+								<div class="sign-in-error has-error">
+									<div class="help-block">Email and password combination not found.</div>
+								</div>
+							</form>
+							<div class="sign-up-link">
+								<a href="#/signup">Not a member? Sign up here.</a>
+							</div>
+						</div>
+					</li>
+					<li class="dropdown" ng-show="identity.authenticated()">
+						<a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Welcome {{identity.currentUser.fullName}} <span class="caret"></span></a>
+						<ul class="dropdown-menu user-options">
+							<li><a href="">Create an Event</a></li>
+							<li><a href="" ng-click="signout()">Logout</a></li>
+						</ul>
+					</li>
+				</div>
+			</div>
 		</div>
-
+		<div class="container">
+			<div ui-view></div>
+		</div>
+		<%if (bootstrappedEventUser) { %>
+			<script>window.bootstrappedEventUser = <%- bootstrappedEventUser %></script>
+		<% } %>
 		<script src="js/vendor/jquery.min.js"></script>
 		<script src="js/vendor/angular.min.js"></script>
 		<script src="js/vendor/angular-ui-router.min.js"></script>
-		<script src="js/eventinator.min.js"></script>
+		<script src="js/vendor/angular-resource.min.js"></script>
+		<script src="js/vendor/bootstrap.min.js"></script>
+		<script src="app/eventinator.min.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6l8JlkB6YL18Irq5OhlkBSs1G1-2E6KA&libraries=places"></script>
 	</body>
 </html>

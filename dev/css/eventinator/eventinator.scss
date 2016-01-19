@@ -1,5 +1,91 @@
 @import 'vars';
+body {
+	min-width: 320px;
+}
+.navbar-right {
+	float: right;
+	&>li {
+		float: left;
+	}
+}
+.sign-in-menu {
+	width: 300px;
+	.navbar-form {
+		overflow: hidden;
+	}
+	.navbar-form .form-control {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+	button {
+		float: right;
+	}
+	.sign-in-error {
+		text-align: center;
+		padding: 2px 15px;
+		width: auto;
+		overflow-x: hidden;
+		.help-block {
+			margin: 0;
+			opacity: 0;
+			transition: opacity 250ms ease-in;
+			&.show-error {
+				opacity: 1;
+			}
+		}
+	}
+	.sign-up-link {
+		text-align: center;
+		padding: 10px 15px;
+	}
+}
+.event-signup-h1 {
+	margin-bottom: 25px;
+}
+#eventSignUpForm {
+	overflow: hidden;
+	display: block;
+	.password-disclaimer {
+		padding: 0 15px;
+		color: $lg;
+		clear: both;
+	}
+	h4 {
+		text-align: center;
+		margin: 0;
+		padding: 20px 15px;
+		clear: both;
+	}
+}
 
-h1 {
-	color: $secondary;
+@media screen and (max-width: 767px) {
+	.navbar-nav {
+		margin: 0 -15px;
+	}
+	.navbar-nav>li>a {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.navbar-nav .open .dropdown-menu {
+		position: absolute;
+		float: left;
+		background-color: $w;
+		-webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		box-shadow: 0 6px 12px rgba(0,0,0,.175);
+		width: 300px;
+		border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+	}
+	.navbar-right .dropdown-menu {
+		right: 0;
+		left: auto;
+	}
+	.navbar-form {
+		width: auto;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-right: 0;
+		margin-left: 0;
+		border: 0 none;
+	}
 }

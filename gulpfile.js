@@ -1,6 +1,7 @@
 /*eslint-env node */
 
 var gulp = require('gulp');
+var exec = require('child_process').exec;
 var gls = require('gulp-live-server');
 var sass = require('gulp-sass');
 var mincss = require('gulp-cssmin');
@@ -9,11 +10,12 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 
 gulp.task('default', ['vendorcss', 'vendorjs'], function() {
-	
+
 });
 
 gulp.task('serve', function() {
 	var server = gls.new('server.js');
+	exec('mongod');
 	server.start();
 
 	gulp.watch(['server/**/*.html'], function(file) {
@@ -22,7 +24,7 @@ gulp.task('serve', function() {
 	gulp.watch(['public/**/*'], function(file) {
 		server.notify.apply(server, [file]);
 	});
-	gulp.watch(['myapp.js', 'server/**/*.js'], function() {
+	gulp.watch(['server/**/*.js'], function() {
 		server.start.bind(server);
 	});
 	gulp.watch(['dev/css/**/*.scss'], ['sass'], function() {});
@@ -46,15 +48,19 @@ gulp.task('sass', function() {
 });
 
 gulp.task('vendorjs', function() {
-	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/jquery/dist/*.min.*'])
+	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js'])
 		.pipe(gulp.dest('./public/js/vendor'));
 });
 
 gulp.task('js', function() {
-	gulp.src('./dev/js/eventinator/*.js')
+	gulp.src(['./dev/js/eventinator/app.js', './dev/js/eventinator/**/*.js'])
 		.pipe(concat('eventinator.js'))
 		.pipe(gulp.dest('./dist/js/eventinator'))
-		.pipe(uglify())
+		.pipe(uglify({
+			compress: {
+				sequences: false
+			}
+		}))
 		.pipe(rename({suffix: '.min'}))
-		.pipe(gulp.dest('./public/js'));
+		.pipe(gulp.dest('./public/app'));
 });
