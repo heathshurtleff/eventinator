@@ -57,6 +57,39 @@ body {
 		clear: both;
 	}
 }
+.pwd-popover {
+	&.popover {
+		padding: 0;
+	}
+	.popover-content {
+		padding: 0;
+	}
+	.arrow.valid:after {
+		border-top-color: #5cb85c;
+	}
+}
+.pass-confirm-container {
+	width: 210px;
+	text-align: center;
+	border-radius: 3px;
+	overflow: hidden;
+	.requirement-box {
+		width: 20%;
+		float: left;
+		padding: 5px;
+		color: $lg;
+		border-right: 1px solid rgba(0,0,0,.2);
+		font-weight: 600;
+		&:last-child {
+			border-right: none;
+		}
+		&.valid {
+			background: #5cb85c;
+			color: $w;
+			border-right-color: $w
+		}
+	}
+}
 
 @media screen and (max-width: 767px) {
 	.navbar-nav {
