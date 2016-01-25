@@ -1,6 +1,7 @@
 /*global angular,$*/
 
 angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$location', 'eventUser', 'authService', function($scope, $location, eventUser, authService) {
+	$scope.validForm = true;
 	$scope.eventSignup = function() {
 		var newUser = {
 			email: $scope.email,
@@ -22,6 +23,7 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 
 	var $inputs = $('#eventSignUpForm input[id!="password"]');
 	var $pass = $('#password');
+	var $confPass = $('#confPass');
 
 	$pass.popover({
 		container: 'body',
@@ -32,17 +34,22 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 		template: '<div class="popover pwd-popover"><div class="arrow"></div><div class="popover-content"></div></div>'
 	});
 
+	$confPass.popover({
+		container: 'body',
+		content: 'Confirm your password',
+		html: true,
+		placement: 'top',
+		trigger: 'focus'
+	});
+
 	$(function() {
 		$('[data-toggle=popover]').popover();
 	});
 	$inputs.on('keyup blur', function() {
-		var $input = $(this),
-			$container = $input.parents('.has-feedback'),
-			$feedbackIcon = $container.find('.form-control-feedback');
+		var $input = $(this);
 
+		changeValidationIcon($input, $input.hasClass('ng-invalid'));
 		if($input.hasClass('ng-invalid')) {
-			$container.addClass('has-error');
-			$feedbackIcon.addClass('glyphicon-remove');
 			if($input.hasClass('ng-invalid-required')) {
 				updatePopoverText($input, 'Your ' + $input.attr('id') + ' is required');
 			} else if($input.hasClass('ng-invalid-minlength')) {
@@ -51,11 +58,6 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 				updatePopoverText($input, 'Invalid email address');
 			}
 		} else if ($input.hasClass('ng-valid')) {
-			$container.removeClass('has-error');
-			$feedbackIcon.removeClass('glyphicon-remove');
-			$container.addClass('has-success');
-			$feedbackIcon.addClass('glyphicon-ok');
-			//updatePopoverText($input, 'Nice to meet you ' + $scope.fullName + '!');
 			updatePopoverText($input, 'Looks good!');
 		}
 		//console.log($input);
@@ -65,6 +67,17 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 		passwordValidator($(this));
 	});
 
+	$confPass.on('focus keyup blur', function() {
+		var $input = $(this);
+
+		changeValidationIcon($input, $scope.password !== $scope.confPass);
+		if($scope.password !== $scope.confPass) {
+			updatePopoverText($input, 'You passwords must match');
+		} else {
+			updatePopoverText($input, 'We have a match!');
+		}
+	});
+
 	function passwordValidator($input) {
 		var pwdVal = $input.val();
 		var passedConditions = {
@@ -72,16 +85,18 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			lower: pwdVal.search(/[a-z]/g) > -1,
 			num: pwdVal.search(/[0-9]/g) > -1,
 			punct: pwdVal.search(/[!#$@_'+,?\[\].-]/g) > -1,
-			chars: pwdVal.length >= 8
+			chars: pwdVal.length >= 8,
+			invalidChars: pwdVal.search(/[^A-z0-9\!\@\#\$\%\^\&\*]/g) > -1
 		};
 
-		changeDisplay(passedConditions);
+		changeDisplay(passedConditions, $input);
 	}
 
-	function changeDisplay(cond) {
+	function changeDisplay(cond, $input) {
 		var $validationDisplay = $('.pass-confirm-container');
 		var $allBoxes = $validationDisplay.find('.requirement-box');
 		var $arrow = $('.pwd-popover').find('.arrow');
+		var invalidPass = false;
 
 		$allBoxes.removeClass('valid');
 		$arrow.removeClass('valid');
@@ -93,10 +108,40 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 		}
 		if(cond.punct) $validationDisplay.find('.punct').addClass('valid');
 		if(cond.chars) $validationDisplay.find('.chars').addClass('valid');
+		if(!cond.upper || !cond.lower || !cond.num || !cond.punct || !cond.chars) {
+			invalidPass = true;
+		}
+		if(cond.invalidChars) {
+			invalidPass = true;
+			$('.password-error').text('The password you entered contains an invalid character.');
+		} else {
+			$('.password-error').text('');
+		}
+
+		changeValidationIcon($input, invalidPass);
 	}
 
 	function updatePopoverText(input, text) {
 		var popoverData = input.data('bs.popover');
 		popoverData.tip().find('.popover-content').text(text);
+	}
+
+	function changeValidationIcon($input, failCondition) {
+		var $container = $input.parents('.has-feedback');
+		var $feedbackIcon = $container.find('.form-control-feedback');
+
+		if(failCondition) {
+			$scope.validForm = false;
+			$container.removeClass('has-success');
+			$feedbackIcon.removeClass('glyphicon-ok');
+			$container.addClass('has-error');
+			$feedbackIcon.addClass('glyphicon-remove');
+		} else {
+			$scope.validForm = true;
+			$container.removeClass('has-error');
+			$feedbackIcon.removeClass('glyphicon-remove');
+			$container.addClass('has-success');
+			$feedbackIcon.addClass('glyphicon-ok');
+		}
 	}
 }]);

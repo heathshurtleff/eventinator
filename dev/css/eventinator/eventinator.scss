@@ -50,6 +50,9 @@ body {
 		color: $lg;
 		clear: both;
 	}
+	.password-error {
+		color: $err;
+	}
 	h4 {
 		text-align: center;
 		margin: 0;
