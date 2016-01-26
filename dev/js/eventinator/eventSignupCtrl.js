@@ -1,6 +1,6 @@
 /*global angular,$*/
 
-angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$location', 'eventUser', 'authService', function($scope, $location, eventUser, authService) {
+angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$location', 'eventUser', 'authService', 'addressService', function($scope, $location, eventUser, authService, addressService) {
 	$scope.validForm = true;
 	$scope.eventSignup = function() {
 		var newUser = {
@@ -13,17 +13,17 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			homeAddress: $scope.homeAddress
 		};
 
-		// authService.createEvtUser(newUser).then(function() {
-		// 	//TODO: User Feedback
-		// 	$location.path('/');
-		// }, function(excuse) {
-		// 	$('.full-form-error').text(excuse);
-		// });
+		authService.createEvtUser(newUser).then(function() {
+			$location.path('/');
+		}, function(excuse) {
+			$('.full-form-error').text(excuse);
+		});
 	};
 
 	var $inputs = $('#eventSignUpForm input[id!="password"]');
 	var $pass = $('#password');
 	var $confPass = $('#confPass');
+	var $addr = $('#autocomplete');
 
 	$pass.popover({
 		container: 'body',
@@ -60,7 +60,6 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 		} else if ($input.hasClass('ng-valid')) {
 			updatePopoverText($input, 'Looks good!');
 		}
-		//console.log($input);
 	});
 
 	$pass.on('focus keyup', function() {
@@ -78,15 +77,26 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 		}
 	});
 
+	$addr.on('focus', function() {
+		var $input = $(this);
+
+		addressService.initAutocomplete($input.attr('id'));
+		addressService.geolocate();
+
+		addressService.autocomplete.addListener('place_changed', function() {
+			$scope.homeAddress = $addr.val();
+		});
+	});
+
 	function passwordValidator($input) {
 		var pwdVal = $input.val();
 		var passedConditions = {
 			upper: pwdVal.search(/[A-Z]/g) > -1,
 			lower: pwdVal.search(/[a-z]/g) > -1,
 			num: pwdVal.search(/[0-9]/g) > -1,
-			punct: pwdVal.search(/[!#$@_'+,?\[\].-]/g) > -1,
+			punct: pwdVal.search(/[!#$@&\*\_]/g) > -1,
 			chars: pwdVal.length >= 8,
-			invalidChars: pwdVal.search(/[^A-z0-9\!\@\#\$\%\^\&\*]/g) > -1
+			invalidChars: pwdVal.search(/[^A-z0-9\!\@\#\$\&\*\_]/g) > -1
 		};
 
 		changeDisplay(passedConditions, $input);

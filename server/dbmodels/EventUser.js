@@ -9,7 +9,7 @@ var eventUserSchema = mongoose.Schema({
 	company: {type: String},
 	job: {type: String},
 	bday: {type: Date},
-	address: {type: String},
+	homeAddress: {type: String},
 	salt: {type: String, required: '{PATH} is required.'},
 	hashed_pwd: {type: String, required: '{PATH} is required.'}
 });
