@@ -16,6 +16,7 @@ var eventUserSchema = mongoose.Schema({
 
 eventUserSchema.methods = {
 	authenticate: function(passwordToMatch) {
+		console.log('attempting to authenticate in here');
 		return encrypt.hashPass(this.salt, passwordToMatch) === this.hashed_pwd;
 	}
 };

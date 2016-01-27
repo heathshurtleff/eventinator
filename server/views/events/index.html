@@ -16,10 +16,10 @@
 						<div class="dropdown-menu sign-in-menu">
 							<form class="navbar-form">
 								<label for="signInEmail">Email Address</label>
-								<input id="signInEmail" type="email" class="form-control" placeholder="your@email.com" autocomplete="email">
+								<input id="signInEmail" type="email" class="form-control" placeholder="your@email.com" autocomplete="email" ng-model="signinemail">
 								<label for="signInPassword">Password</label>
-								<input id="signInPassword" type="password" class="form-control">
-								<button type="submit" class="btn btn-success" disabled="disabled">Submit</button>
+								<input id="signInPassword" type="password" class="form-control" ng-model="signinpassword">
+								<button type="submit" class="btn btn-success" ng-click="signin(signinemail, signinpassword)">Submit</button>
 								<div class="sign-in-error has-error">
 									<div class="help-block">Email and password combination not found.</div>
 								</div>

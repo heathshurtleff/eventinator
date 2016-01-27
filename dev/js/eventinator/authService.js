@@ -2,16 +2,21 @@
 
 angular.module('eventinator').factory('authService', ['$q', '$http', 'eventUser', 'eventIdentity', function($q, $http, eventUser, eventIdentity) {
 	return {
-		// authenticateUser: function(user, pass) {
-		// 	var def = $q.defer();
-		// 	$http.post('/eventLogin', {username: user, password:pass}).then(function(resp) {
-		// 		if(resp.data.success) {
-		// 			var evtUser = new eventUser();
-		// 		} else {
-		// 			def.resolve(false);
-		// 		}
-		// 	});
-		// },
+		authenticateUser: function(email, pass) {
+			var def = $q.defer();
+			$http.post('/app/eventLogin', {email: email, password:pass}).then(function(resp) {
+				console.log(resp.data);
+				if(resp.data.success) {
+					var evtUser = new eventUser();
+					angular.extend(evtUser, resp.data.user);
+					eventIdentity.currentUser = evtUser;
+					def.resolve(true);
+				} else {
+					def.resolve(false);
+				}
+			});
+			return def.promise;
+		},
 		createEvtUser: function(newUser) {
 			var newEvtUser = new eventUser(newUser);
 
