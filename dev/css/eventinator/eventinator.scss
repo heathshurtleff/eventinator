@@ -68,7 +68,7 @@ body {
 		padding: 0;
 	}
 	.arrow.valid:after {
-		border-top-color: #5cb85c;
+		border-top-color: $succ;
 	}
 }
 .pass-confirm-container {
@@ -87,11 +87,16 @@ body {
 			border-right: none;
 		}
 		&.valid {
-			background: #5cb85c;
+			background: $succ;
 			color: $w;
 			border-right-color: $w
 		}
 	}
+}
+.full-form-error {
+	display: inline-block;
+	color: $err;
+	padding-top: 9px;
 }
 
 @media screen and (max-width: 767px) {

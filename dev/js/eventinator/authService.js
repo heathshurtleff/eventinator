@@ -21,7 +21,7 @@ angular.module('eventinator').factory('authService', ['$q', '$http', 'eventUser'
 				eventIdentity.currentUser = newEvtUser;
 				def.resolve();
 			}, function(response) {
-				def.reject(response.data.reason);
+				def.reject(response.data.excuse);
 			});
 
 			return def.promise;
