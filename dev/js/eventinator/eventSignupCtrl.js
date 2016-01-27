@@ -12,18 +12,31 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			bday: $scope.bday,
 			homeAddress: $scope.homeAddress
 		};
+		var hasErrors = false;
 
-		authService.createEvtUser(newUser).then(function() {
-			$location.path('/');
-		}, function(excuse) {
-			$('.full-form-error').text(excuse);
+		$inputs.each(function() {
+			var $input = $(this);
+
+			if($input.hasClass('ng-invalid')) {
+				hasErrors = true;
+			}
 		});
+
+		if(!hasErrors) {
+			authService.createEvtUser(newUser).then(function() {
+				$location.path('/');
+			}, function(excuse) {
+				console.log(excuse);
+				$('.full-form-error').text(excuse);
+			});
+		}
 	};
 
 	var $inputs = $('#eventSignUpForm input[id!="password"]');
 	var $pass = $('#password');
 	var $confPass = $('#confPass');
-	var $addr = $('#autocomplete');
+	var $addr = $('#homeAddr');
+	var invalidChars = /[^A-z0-9\!\@\#\$\&\*\_ \.]/g;
 
 	$pass.popover({
 		container: 'body',
@@ -45,19 +58,20 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 	$(function() {
 		$('[data-toggle=popover]').popover();
 	});
-	$inputs.on('keyup blur', function() {
+	$inputs.on('focus keyup blur', function(e) {
 		var $input = $(this);
 
-		changeValidationIcon($input, $input.hasClass('ng-invalid'));
+		if(e.type !== 'focus' && $input.val().length > 0) changeValidationIcon($input, $input.hasClass('ng-invalid'));
+
 		if($input.hasClass('ng-invalid')) {
-			if($input.hasClass('ng-invalid-required')) {
+			if($input.hasClass('ng-invalid-required') && !$input.hasClass('ng-pristine')) {
 				updatePopoverText($input, 'Your ' + $input.attr('id') + ' is required');
 			} else if($input.hasClass('ng-invalid-minlength')) {
 				updatePopoverText($input, 'Must be at least ' + $input.attr('ng-minlength') + ' characters');
 			} else if ($input.hasClass('ng-invalid-email')) {
 				updatePopoverText($input, 'Invalid email address');
 			}
-		} else if ($input.hasClass('ng-valid')) {
+		} else if ($input.hasClass('ng-valid') && $input.val().length > 0) {
 			updatePopoverText($input, 'Looks good!');
 		}
 	});
@@ -94,9 +108,9 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			upper: pwdVal.search(/[A-Z]/g) > -1,
 			lower: pwdVal.search(/[a-z]/g) > -1,
 			num: pwdVal.search(/[0-9]/g) > -1,
-			punct: pwdVal.search(/[!#$@&\*\_]/g) > -1,
+			punct: pwdVal.search(/[!#$@&\*\_ \.]/g) > -1,
 			chars: pwdVal.length >= 8,
-			invalidChars: pwdVal.search(/[^A-z0-9\!\@\#\$\&\*\_]/g) > -1
+			invalidChars: pwdVal.search(invalidChars) > -1
 		};
 
 		changeDisplay(passedConditions, $input);

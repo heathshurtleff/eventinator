@@ -35,21 +35,33 @@
 
 	</div>
 	<h4>Additional Information (optional)</h4>
-	<div class="form-group col-sm-6">
-		<label for="company">Company</label>
-		<input id="company" type="text" class="form-control" autocomplete="organization" ng-model="company">
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label for="company" class="control-label">Company</label>
+			<input id="company" type="text" class="form-control" autocomplete="organization" ng-model="company" data-toggle="popover" data-container="body" data-content="Where do you work?" data-placement="top" data-trigger="focus">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
 	</div>
-	<div class="form-group col-sm-6">
-		<label for="jobTitle">Job Title</label>
-		<input id="jobTitle" type="text" class="form-control" autocomplete="organization-title" ng-model="job">
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label for="jobTitle" class="control-label">Job Title</label>
+			<input id="jobTitle" type="text" class="form-control" autocomplete="organization-title" ng-model="job" data-toggle="popover" data-container="body" data-content="What do you do?" data-placement="top" data-trigger="focus">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
 	</div>
-	<div class="form-group col-sm-3">
-		<label for="bDay">Birthday</label>
-		<input id="bDay" type="date" class="form-control" autocomplete="bday" ng-model="bday">
+	<div class="col-sm-3">
+		<div class="form-group has-feedback">
+			<label for="bDay" class="control-label">Birthday</label>
+			<input id="bDay" type="date" class="form-control" autocomplete="bday" ng-model="bday" data-toggle="popover" data-container="body" data-content="When were you born?" data-placement="top" data-trigger="focus">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
 	</div>
-	<div class="form-group col-sm-9">
-		<label for="autocomplete">Home Address</label>
-		<input id="autocomplete" type="text" class="form-control" autocomplete="off" ng-model="homeAddress">
+	<div class="col-sm-9">
+		<div class="form-group has-feedback">
+			<label for="homeAddr" class="control-label">Home Address</label>
+			<input id="homeAddr" type="text" class="form-control" autocomplete="off" ng-model="homeAddress" data-toggle="popover" data-container="body" data-content="Where do you live?" data-placement="top" data-trigger="focus">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
 	</div>
 	<div class="form-group col-sm-2">
 		<button type="submit" class="btn btn-success" ng-click="eventSignup()">Sign Up</button>
