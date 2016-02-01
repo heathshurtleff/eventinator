@@ -5,7 +5,7 @@ var encrypt = require('../utils/encrypt');
 
 var eventUserSchema = mongoose.Schema({
 	fullName: {type: String, required: '{PATH} is required.'},
-	email: {type: String, required: '{PATH} is required.', unique: true},
+	username: {type: String, required: '{PATH} is required.', unique: true},
 	company: {type: String},
 	job: {type: String},
 	bday: {type: Date},
@@ -16,7 +16,6 @@ var eventUserSchema = mongoose.Schema({
 
 eventUserSchema.methods = {
 	authenticate: function(passwordToMatch) {
-		console.log('attempting to authenticate in here');
 		return encrypt.hashPass(this.salt, passwordToMatch) === this.hashed_pwd;
 	}
 };

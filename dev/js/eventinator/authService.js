@@ -4,8 +4,7 @@ angular.module('eventinator').factory('authService', ['$q', '$http', 'eventUser'
 	return {
 		authenticateUser: function(email, pass) {
 			var def = $q.defer();
-			$http.post('/app/eventLogin', {email: email, password:pass}).then(function(resp) {
-				console.log(resp.data);
+			$http.post('/app/eventLogin', {username: email, password:pass}).then(function(resp) {
 				if(resp.data.success) {
 					var evtUser = new eventUser();
 					angular.extend(evtUser, resp.data.user);
