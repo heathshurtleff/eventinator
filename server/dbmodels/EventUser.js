@@ -5,7 +5,7 @@ var encrypt = require('../utils/encrypt');
 
 var eventUserSchema = mongoose.Schema({
 	fullName: {type: String, required: '{PATH} is required.'},
-	email: {type: String, required: '{PATH} is required.', unique: true},
+	username: {type: String, required: '{PATH} is required.', unique: true},
 	company: {type: String},
 	job: {type: String},
 	bday: {type: Date},

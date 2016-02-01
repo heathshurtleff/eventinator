@@ -4,7 +4,7 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 	$scope.validForm = true;
 	$scope.eventSignup = function() {
 		var newUser = {
-			email: $scope.email,
+			username: $scope.email,
 			password: $scope.password,
 			fullName: $scope.fullName,
 			company: $scope.company,
@@ -26,7 +26,6 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			authService.createEvtUser(newUser).then(function() {
 				$location.path('/');
 			}, function(excuse) {
-				console.log(excuse);
 				$('.full-form-error').text(excuse);
 			});
 		}

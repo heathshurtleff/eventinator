@@ -1,5 +1,6 @@
 /*eslint-env node */
 
+var auth = require('./auth');
 var eventUsers = require('../controllers/evtUsers');
 
 module.exports = function(app) {
@@ -16,6 +17,7 @@ module.exports = function(app) {
 	);
 
 	app.post('/app/eventUsers', eventUsers.createUser);
+	app.post('/app/eventLogin', auth.authenticateUser);
 
 	app.post('/app/logout', function(req, res) {
 		req.logout();

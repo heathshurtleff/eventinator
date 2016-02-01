@@ -1,4 +1,4 @@
-/*global angular*/
+/*global angular,$*/
 
 angular.module('eventinator', ['ui.router', 'ngResource']);
 
@@ -18,6 +18,13 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 
 angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIdentity', 'authService', '$location', function($scope, eventIdentity, authService, $location){
 	$scope.identity = eventIdentity;
+	$scope.signin = function(email, pwd) {
+		authService.authenticateUser(email, pwd).then(function(success) {
+			if(!success) {
+				$('.sign-in-error .help-block').css('opacity', 1);
+			}
+		});
+	};
 	$scope.signout = function() {
 		authService.logoutUser().then(function() {
 			$scope.emial = '';

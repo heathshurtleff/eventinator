@@ -7,9 +7,8 @@ var passport = require('passport'),
 
 module.exports = function() {
 	passport.use(new Local(function(email, pass, done) {
-		EventUser.findOne({email: email}).exec(function(err, user) {
-			console.log(user);
-			if(email && user.authenticate(pass)) {
+		EventUser.findOne({username: email}, function(err, user) {
+			if(user && user.authenticate(pass)) {
 				return done(null, user);
 			} else {
 				return done(null, false);
