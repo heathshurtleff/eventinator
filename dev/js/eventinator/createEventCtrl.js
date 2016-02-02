@@ -1,7 +1,24 @@
-/*global angular, $*/
+/*global angular, $, toastr*/
 
-angular.module('eventinator').controller('createEventCtrl', ['$scope', 'addressService', 'events', function($scope, addressService, events) {
+angular.module('eventinator').controller('createEventCtrl', ['$scope', '$location', 'addressService', 'events', 'validationService', 'toastrService', function($scope, $location, addressService, events, validationService, toastrService) {
 	$scope.eventHost = $scope.identity.currentUser.fullName;
+
+	var $inputs = $('input, textarea');
+
+	$inputs.on('focus blur keyup change input', function(e) {
+		var $input = $(this);
+
+		if(e.type === 'input') {
+			$scope.create.eventType.$validate();
+			$input.change();
+		}
+
+		validationService.checkFieldStatus($input, e);
+	});
+
+	$('#formSubmit').on('click', function(e) {
+		e.preventDefault();
+	});
 
 	$scope.eventCreation = function() {
 		var newEvent = {
@@ -17,23 +34,39 @@ angular.module('eventinator').controller('createEventCtrl', ['$scope', 'addressS
 
 		var newEventObj = new events(newEvent);
 
-		newEventObj.$save().then(function() {
-			// Do something here?
-		}, function(response) {
-			console.log(response.data.excuse, response.statusText);
-			$('.full-form-error').text(response.statusText + ' | ' + response.data.excuse);
-		});
+		var $form = $('#eventCreationForm');
+
+		if($form.hasClass('ng-valid')) {
+			newEventObj.$save().then(function(evt) {
+				toastrService.toast('success', evt.title + ' successfully created!');
+				//$location.path('/');
+			}, function(response) {
+				$('.full-form-error').text(response.statusText + ' | ' + response.data.excuse);
+			});
+		} else {
+			$inputs.each(function() {
+				var $input = $(this);
+				var e = {type: 'jQueryEach'};
+
+				$input.removeClass('ng-pristine');
+				validationService.checkFieldStatus($input, e);
+			});
+		}
 	};
 
-	var $location = $('#location');
-	$location.on('focus', function() {
+	var $loc = $('#location');
+	$loc.on('focus', function() {
 		var $input = $(this);
 
 		addressService.initAutocomplete($input.attr('id'));
 		addressService.geolocate();
 
 		addressService.autocomplete.addListener('place_changed', function() {
-			$scope.eventLocation = $location.val();
+			$scope.eventLocation = $loc.val();
 		});
+	});
+
+	$(function() {
+		$('[data-toggle=popover]').popover();
 	});
 }]);

@@ -1,4 +1,5 @@
 @import 'vars';
+@import './bower_components/toastr/toastr.scss';
 body {
 	min-width: 320px;
 }
@@ -97,6 +98,15 @@ body {
 	display: inline-block;
 	color: $err;
 	padding-top: 9px;
+}
+.popover {
+	max-width: 300px;
+	width: 300px;
+	text-align: center;
+	font-size: 100%;
+	.popover-content {
+		padding: 9px;
+	}
 }
 
 @media screen and (max-width: 767px) {

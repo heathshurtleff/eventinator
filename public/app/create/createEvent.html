@@ -1,23 +1,23 @@
 <h1 class="event-signup-h1">Create a New Event</h1>
-<form id="eventCreationForm">
+<form id="eventCreationForm" name="create">
 	<div class="col-sm-6">
 		<div class="form-group has-feedback">
 			<label class="control-label" for="eventTitle">Event Title</label>
-			<input id="eventTitle" type="text" class="form-control" required placeholder="{{identity.currentUser.fullName}}'s Event" ng-model="eventTitle" ng-minlength="5" autofocus data-toggle="popover" data-container="body" data-content="Hey there! What's your name?" data-placement="top" data-trigger="focus">
+			<input id="eventTitle" type="text" class="form-control" required placeholder="{{identity.currentUser.fullName}}'s Event" ng-model="eventTitle" data-pretty-name="Event title" ng-minlength="5" ng-maxlength="50" autofocus data-toggle="popover" data-container="body" data-content="Name your event" data-placement="top" data-trigger="focus">
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class="form-group has-feedback">
-			<label class="control-label" for="host">Host</label>
-			<input id="host" type="text" class="form-control" required ng-model="eventHost" autocomplete="name">
+			<label class="control-label" for="host">Host Name</label>
+			<input id="host" type="text" class="form-control" required ng-model="eventHost" autocomplete="name" data-pretty-name="Host name" ng-minlength="3" ng-maxlength="50" data-toggle="popover" data-container="body" data-content="Who's hosting?" data-placement="top" data-trigger="focus">
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="form-group has-feedback">
 			<label class="control-label" for="eventType">Event Type</label>
-			<input type="text" id="eventType" class="form-control" name="eventType" list="eventTypeList" ng-model="eventType" placeholder="Party" required>
+			<input type="text" id="eventType" class="form-control" name="eventType" list="eventTypeList" ng-model="eventType" placeholder="Party" required data-pretty-name="Event type" ng-minlength="3" ng-maxlength="25" data-toggle="popover" data-container="body" data-content="What type of event?" data-placement="top" data-trigger="focus">
 			<datalist id="eventTypeList">
 				<option value="Party"></option>
 				<option value="Birthday Party"></option>
@@ -31,39 +31,40 @@
 	<div class="col-sm-4">
 		<div class="form-group has-feedback">
 			<label for="startDate" class="control-label">Start Date/Time</label>
-			<input id="startDate" type="datetime-local" class="form-control" required ng-model="eventStart">
+			<input id="startDate" type="datetime-local" class="form-control" required future-date ng-model="eventStart" data-pretty-name="Event start" data-toggle="popover" data-container="body" data-content="When does it start?" data-placement="top" data-trigger="focus">
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-4">
 		<div class="form-group has-feedback">
 			<label for="endDate" class="control-label">End Date/Time</label>
-			<input id="endDate" type="datetime-local" class="form-control" required ng-model="eventEnd">
+			<input id="endDate" type="datetime-local" class="form-control" required future-date end-before-start ng-model="eventEnd" data-pretty-name="Event end" data-toggle="popover" data-container="body" data-content="When does it end?" data-placement="top" data-trigger="focus">
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class="form-group has-feedback">
 			<label for="location" class="control-label">Location</label>
-			<input id="location" type="text" class="form-control" required ng-model="eventLocation" placeholder="1234 Location Road">
+			<input id="location" type="text" class="form-control" required ng-model="eventLocation" placeholder="1234 Location Road, City, State 11111" data-pretty-name="Event location" data-toggle="popover" data-container="body" data-content="Where is it being held?" data-placement="top" data-trigger="focus">
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-6">
 		<div class="form-group has-feedback">
 			<label for="guests" class="control-label">Guest List</label>
-			<textarea id="guests" class="form-control" required ng-model="guests" placeholder="Best Friend 1, Best Friend 2, etc."></textarea>
+			<textarea id="guests" class="form-control" required ng-model="guests" placeholder="Best Friend 1, Best Friend 2, etc." data-pretty-name="Guest list" data-toggle="popover" data-container="body" data-content="Who's invited?" data-placement="top" data-trigger="focus"></textarea>
 			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="col-sm-12">
-		<div class="form-group">
+		<div class="form-group has-feedback">
 			<label for="info" class="control-label">Event Info (optional)</label>
-			<textarea id="info" class="form-control" required ng-model="info" placeholder="Casual attire. Present required."></textarea>
+			<textarea id="info" class="form-control" ng-model="info" placeholder="Casual attire. Present required." data-pretty-name="Guest list" data-toggle="popover" data-container="body" data-content="Add instructions" data-placement="top" data-trigger="focus"></textarea>
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
 		</div>
 	</div>
 	<div class="form-group col-sm-2">
-		<button type="submit" class="btn btn-success" ng-click="eventCreation()">Sign Up</button>
+		<button id="formSubmit" type="submit" class="btn btn-success" ng-click="eventCreation()">Sign Up</button>
 	</div>
 	<div class="col-sm-10">
 		<span class="full-form-error"></span>

@@ -1,6 +1,6 @@
 /*global angular,$*/
 
-angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$location', 'eventUser', 'authService', 'addressService', function($scope, $location, eventUser, authService, addressService) {
+angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$location', 'eventUser', 'authService', 'addressService', 'validationService', function($scope, $location, eventUser, authService, addressService, validationService) {
 	$scope.validForm = true;
 	$scope.eventSignup = function() {
 		var newUser = {
@@ -60,19 +60,7 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 	$inputs.on('focus keyup blur', function(e) {
 		var $input = $(this);
 
-		if(e.type !== 'focus' && $input.val().length > 0) changeValidationIcon($input, $input.hasClass('ng-invalid'));
-
-		if($input.hasClass('ng-invalid')) {
-			if($input.hasClass('ng-invalid-required') && !$input.hasClass('ng-pristine')) {
-				updatePopoverText($input, 'Your ' + $input.attr('id') + ' is required');
-			} else if($input.hasClass('ng-invalid-minlength')) {
-				updatePopoverText($input, 'Must be at least ' + $input.attr('ng-minlength') + ' characters');
-			} else if ($input.hasClass('ng-invalid-email')) {
-				updatePopoverText($input, 'Invalid email address');
-			}
-		} else if ($input.hasClass('ng-valid') && $input.val().length > 0) {
-			updatePopoverText($input, 'Looks good!');
-		}
+		validationService.checkFieldStatus($input, e);
 	});
 
 	$pass.on('focus keyup', function() {
@@ -82,11 +70,11 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 	$confPass.on('focus keyup blur', function() {
 		var $input = $(this);
 
-		changeValidationIcon($input, $scope.password !== $scope.confPass);
+		validationService.changeValidationIcon($input, $scope.password !== $scope.confPass);
 		if($scope.password !== $scope.confPass) {
-			updatePopoverText($input, 'You passwords must match');
+			validationService.updatePopoverText($input, 'You passwords must match');
 		} else {
-			updatePopoverText($input, 'We have a match!');
+			validationService.updatePopoverText($input, 'We have a match!');
 		}
 	});
 
@@ -141,30 +129,6 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			$('.password-error').text('');
 		}
 
-		changeValidationIcon($input, invalidPass);
-	}
-
-	function updatePopoverText(input, text) {
-		var popoverData = input.data('bs.popover');
-		popoverData.tip().find('.popover-content').text(text);
-	}
-
-	function changeValidationIcon($input, failCondition) {
-		var $container = $input.parents('.has-feedback');
-		var $feedbackIcon = $container.find('.form-control-feedback');
-
-		if(failCondition) {
-			$scope.validForm = false;
-			$container.removeClass('has-success');
-			$feedbackIcon.removeClass('glyphicon-ok');
-			$container.addClass('has-error');
-			$feedbackIcon.addClass('glyphicon-remove');
-		} else {
-			$scope.validForm = true;
-			$container.removeClass('has-error');
-			$feedbackIcon.removeClass('glyphicon-remove');
-			$container.addClass('has-success');
-			$feedbackIcon.addClass('glyphicon-ok');
-		}
+		validationService.changeValidationIcon($input, invalidPass);
 	}
 }]);

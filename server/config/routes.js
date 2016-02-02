@@ -26,5 +26,4 @@ module.exports = function(app) {
 		req.logout();
 		res.end();
 	});
-
 };

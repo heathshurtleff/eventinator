@@ -25,8 +25,7 @@ gulp.task('serve', function() {
 		server.notify.apply(server, [file]);
 	});
 	gulp.watch(['server/**/*.js'], function() {
-		console.log('server js changed');
-		server.start.bind(server);
+		server.start.bind(server)();
 	});
 	gulp.watch(['dev/css/**/*.scss'], ['sass'], function() {});
 	gulp.watch(['dev/js/**/*.js'], ['js'], function() {});
@@ -49,12 +48,12 @@ gulp.task('sass', function() {
 });
 
 gulp.task('vendorjs', function() {
-	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js'])
+	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js', 'bower_components/toastr/toastr.min.js'])
 		.pipe(gulp.dest('./public/js/vendor'));
 });
 
 gulp.task('js', function() {
-	gulp.src(['./dev/js/eventinator/app.js', './dev/js/eventinator/**/*.js'])
+	gulp.src(['./dev/js/eventinator/app.js', './dev/js/global/**/*.js', './dev/js/eventinator/**/*.js'])
 		.pipe(concat('eventinator.js'))
 		.pipe(gulp.dest('./dist/js/eventinator'))
 		.pipe(uglify({
