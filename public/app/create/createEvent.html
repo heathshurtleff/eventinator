@@ -1,0 +1,74 @@
+<h1 class="event-signup-h1">Create a New Event</h1>
+<form id="eventCreationForm">
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label class="control-label" for="eventTitle">Event Title</label>
+			<input id="eventTitle" type="text" class="form-control" required placeholder="{{identity.currentUser.fullName}}'s Event" ng-model="eventTitle" ng-minlength="5" autofocus data-toggle="popover" data-container="body" data-content="Hey there! What's your name?" data-placement="top" data-trigger="focus">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label class="control-label" for="host">Host</label>
+			<input id="host" type="text" class="form-control" required ng-model="eventHost" autocomplete="name">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group has-feedback">
+			<label class="control-label" for="eventType">Event Type</label>
+			<input type="text" id="eventType" class="form-control" name="eventType" list="eventTypeList" ng-model="eventType" placeholder="Party" required>
+			<datalist id="eventTypeList">
+				<option value="Party"></option>
+				<option value="Birthday Party"></option>
+				<option value="Conference"></option>
+				<option value="Wedding"></option>
+				<option value="Meetup"></option>
+			</datalist>
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group has-feedback">
+			<label for="startDate" class="control-label">Start Date/Time</label>
+			<input id="startDate" type="datetime-local" class="form-control" required ng-model="eventStart">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<div class="form-group has-feedback">
+			<label for="endDate" class="control-label">End Date/Time</label>
+			<input id="endDate" type="datetime-local" class="form-control" required ng-model="eventEnd">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label for="location" class="control-label">Location</label>
+			<input id="location" type="text" class="form-control" required ng-model="eventLocation" placeholder="1234 Location Road">
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<div class="form-group has-feedback">
+			<label for="guests" class="control-label">Guest List</label>
+			<textarea id="guests" class="form-control" required ng-model="guests" placeholder="Best Friend 1, Best Friend 2, etc."></textarea>
+			<span class="glyphicon form-control-feedback" aria-hidden="true"></span>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<div class="form-group">
+			<label for="info" class="control-label">Event Info (optional)</label>
+			<textarea id="info" class="form-control" required ng-model="info" placeholder="Casual attire. Present required."></textarea>
+		</div>
+	</div>
+	<div class="form-group col-sm-2">
+		<button type="submit" class="btn btn-success" ng-click="eventCreation()">Sign Up</button>
+	</div>
+	<div class="col-sm-10">
+		<span class="full-form-error"></span>
+	</div>
+</form>
+<div>
+
+</div>

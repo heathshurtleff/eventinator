@@ -2,6 +2,7 @@
 
 var auth = require('./auth');
 var eventUsers = require('../controllers/evtUsers');
+var events = require('../controllers/events');
 
 module.exports = function(app) {
 
@@ -18,6 +19,8 @@ module.exports = function(app) {
 
 	app.post('/app/eventUsers', eventUsers.createUser);
 	app.post('/app/eventLogin', auth.authenticateUser);
+
+	app.post('/app/createEvent', events.createEvent);
 
 	app.post('/app/logout', function(req, res) {
 		req.logout();

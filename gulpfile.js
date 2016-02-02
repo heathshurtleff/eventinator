@@ -25,6 +25,7 @@ gulp.task('serve', function() {
 		server.notify.apply(server, [file]);
 	});
 	gulp.watch(['server/**/*.js'], function() {
+		console.log('server js changed');
 		server.start.bind(server);
 	});
 	gulp.watch(['dev/css/**/*.scss'], ['sass'], function() {});

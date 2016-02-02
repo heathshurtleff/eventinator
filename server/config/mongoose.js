@@ -2,6 +2,7 @@
 
 var mongoose = require('mongoose');
 var eventUserModel = require('../dbmodels/EventUser');
+var eventsModel = require('../dbmodels/Events');
 
 module.exports = function(config) {
 	mongoose.connect(config.db);

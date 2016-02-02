@@ -13,6 +13,11 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 			url: '/signup',
 			templateUrl: 'app/signup/eventSignup.html',
 			controller: 'eventSignupCtrl'
+		})
+		.state('create', {
+			url: '/create',
+			templateUrl: 'app/create/createEvent.html',
+			controller: 'createEventCtrl'
 		});
 }]);
 
