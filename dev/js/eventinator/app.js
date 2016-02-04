@@ -21,8 +21,13 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 		});
 }]);
 
-angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIdentity', 'authService', '$location', function($scope, eventIdentity, authService, $location){
+angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIdentity', 'authService', '$location', '$http', function($scope, eventIdentity, authService, $location, $http){
 	$scope.identity = eventIdentity;
+	$http.get('./app/events').then(function(response) {
+		$scope.events = response.data;
+	}, function(err) {
+		console.log(err);
+	});
 	$scope.signin = function(email, pwd) {
 		authService.authenticateUser(email, pwd).then(function(success) {
 			if(!success) {

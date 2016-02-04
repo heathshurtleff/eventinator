@@ -20,6 +20,7 @@ module.exports = function(app) {
 	app.post('/app/eventUsers', eventUsers.createUser);
 	app.post('/app/eventLogin', auth.authenticateUser);
 
+	app.get('/app/events', events.getEvents);
 	app.post('/app/createEvent', events.createEvent);
 
 	app.post('/app/logout', function(req, res) {

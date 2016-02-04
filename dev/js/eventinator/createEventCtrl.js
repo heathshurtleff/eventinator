@@ -1,4 +1,4 @@
-/*global angular, $, toastr*/
+/*global angular, $*/
 
 angular.module('eventinator').controller('createEventCtrl', ['$scope', '$location', 'addressService', 'events', 'validationService', 'toastrService', function($scope, $location, addressService, events, validationService, toastrService) {
 	$scope.eventHost = $scope.identity.currentUser.fullName;
