@@ -108,6 +108,33 @@ body {
 		padding: 9px;
 	}
 }
+.flexbox-container {
+	display: flex;
+	align-items: stretch;
+	align-content: stretch;
+	flex-wrap: wrap;
+	padding-right: 0;
+	.event-tile {
+		padding: 10px;
+		max-width: 33.333%;
+		min-width: 33.333%;
+		display: flex;
+		flex-direction: column;
+	}
+	.event-content {
+		padding: 15px;
+		border: 1px solid #cccccc;
+		height: 100%;
+		flex: 1;
+		border-radius: 3px;
+		h3 {
+			margin: 0;
+		}
+		.event-host {
+			text-align: right;
+		}
+	}
+}
 
 @media screen and (max-width: 767px) {
 	.navbar-nav {
