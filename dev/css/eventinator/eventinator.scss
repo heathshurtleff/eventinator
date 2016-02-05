@@ -122,16 +122,23 @@ body {
 		flex-direction: column;
 	}
 	.event-content {
-		padding: 15px;
-		border: 1px solid #cccccc;
+		border: 1px solid #337ab7;
 		height: 100%;
 		flex: 1;
 		border-radius: 3px;
+		.event-header {
+			padding: 15px;
+			background: #337ab7;
+			color: $w;
+		}
 		h3 {
 			margin: 0;
 		}
 		.event-host {
 			text-align: right;
+		}
+		.event-body {
+			padding: 15px;
 		}
 	}
 }

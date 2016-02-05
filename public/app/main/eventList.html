@@ -2,14 +2,18 @@
 <div class="container flexbox-container">
 	<div class="event-tile" ng-repeat="event in events">
 		<div class="event-content">
-			<h3>{{event.title}}</h3>
-			<div class="event-host">Run by: {{event.host}}</div>
-			<div class="event-type">{{event.type}}</div>
-			<div class="col-xs-6">Start: {{event.start | date:"M/d/yyyy"}}<br>{{event.start | date:"h:mm a"}}</div>
-			<div class="col-xs-6">End: {{event.end | date:"M/d/yyyy"}}<br>{{event.end | date:"h:mm a"}}</div>
-			<div class="event-address">{{event.location}}</div>
-			<div class="event-guests">{{event.guests}}</div>
-			<div class="event-info">{{event.info}}</div>
+			<div class="event-header">
+				<h3>{{event.title}}</h3>
+				<div class="event-host">Run by: {{event.host}}</div>
+			</div>
+			<div class="event-body">
+				<div class="event-type">Event Type: {{event.type}}</div>
+				<div class="col-xs-6">Start: {{event.start | date:"M/d/yyyy"}}<br>{{event.start | date:"h:mm a"}}</div>
+				<div class="col-xs-6">End: {{event.end | date:"M/d/yyyy"}}<br>{{event.end | date:"h:mm a"}}</div>
+				<div class="event-address">{{event.location}}</div>
+				<div class="event-guests">{{event.guests}}</div>
+				<div class="event-info">{{event.info}}</div>
+			</div>
 		</div>
 	</div>
 </div>
