@@ -39,7 +39,7 @@ angular.module('eventinator').controller('createEventCtrl', ['$scope', '$locatio
 		if($form.hasClass('ng-valid')) {
 			newEventObj.$save().then(function(evt) {
 				toastrService.toast('success', evt.title + ' successfully created!');
-				//$location.path('/');
+				$location.path('/');
 			}, function(response) {
 				$('.full-form-error').text(response.statusText + ' | ' + response.data.excuse);
 			});

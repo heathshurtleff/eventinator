@@ -7,7 +7,8 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 	$stateProvider
 		.state('main', {
 			url: '/',
-			templateUrl: 'app/main/eventList.html'
+			templateUrl: 'app/main/eventList.html',
+			controller: 'eventinatorCtrl'
 		})
 		.state('signup', {
 			url: '/signup',
@@ -21,12 +22,12 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 		});
 }]);
 
-angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIdentity', 'authService', '$location', '$http', function($scope, eventIdentity, authService, $location, $http){
+angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIdentity', 'authService', '$location', 'eventsService', function($scope, eventIdentity, authService, $location, eventsService){
 	$scope.identity = eventIdentity;
-	$http.get('./app/events').then(function(response) {
-		$scope.events = response.data;
-	}, function(err) {
-		console.log(err);
+	eventsService.fetchEvents().then(function(events){
+		$scope.events = events;
+	}, function(excuse) {
+		$scope.eventsFail = excuse;
 	});
 	$scope.signin = function(email, pwd) {
 		authService.authenticateUser(email, pwd).then(function(success) {
@@ -42,4 +43,7 @@ angular.module('eventinator').controller('eventinatorCtrl', ['$scope', 'eventIde
 			$location.path('/');
 		});
 	};
-}]);
+}])
+.filter('url', function() {
+	return window.encodeURIComponent;
+});

@@ -3,6 +3,10 @@
 body {
 	min-width: 320px;
 }
+h1 {
+	border-bottom: 1px solid $b;
+	padding-bottom: 10px;
+}
 .navbar-right {
 	float: right;
 	&>li {
@@ -108,6 +112,10 @@ body {
 		padding: 9px;
 	}
 }
+.event-signup {
+	text-align: right;
+	margin-right: 15px;
+}
 .flexbox-container {
 	display: flex;
 	align-items: stretch;
@@ -139,10 +147,67 @@ body {
 		}
 		.event-body {
 			padding: 15px;
+			.col-xs-6 {
+				padding: 5px;
+			}
+		}
+		.event-type {
+			text-align: center;
+			padding-bottom: 5px;
+		}
+		.event-start {
+			background: $start;
+			padding: 5px;
+			border-radius: 3px;
+			color: $dg;
+		}
+		.event-end {
+			background: $end;
+			padding: 5px;
+			border-radius: 3px;
+			color: $err;
+		}
+		.event-address {
+			padding: 5px;
+			color: $lg;
+			clear: both;
+			.address-header {
+				border-bottom: 1px solid $lg;
+				text-align: center;
+				margin-bottom: 5px;
+			}
+		}
+		.event-guests {
+			padding: 5px;
+			.guests-header {
+				padding-bottom: 5px;
+			}
+			.guest-list {
+				padding-left: 10px;
+			}
+		}
+		.event-info {
+			padding: 5px 5px 0;
+			color: $g;
+			.info-header {
+				width: 80%;
+				border-bottom: 1px solid $g;
+				margin-bottom: 3px;
+			}
+			p {
+				margin: 0;
+			}
 		}
 	}
 }
-
+@media screen and (max-width: 991px) {
+	.flexbox-container {
+		.event-tile {
+			max-width: 50%;
+			min-width: 50%;
+		}
+	}
+}
 @media screen and (max-width: 767px) {
 	.navbar-nav {
 		margin: 0 -15px;
@@ -172,5 +237,22 @@ body {
 		margin-right: 0;
 		margin-left: 0;
 		border: 0 none;
+	}
+	.flexbox-container {
+		.event-tile {
+			max-width: 100%;
+			min-width: 100%;
+		}
+	}
+}
+@media screen and (max-width: 500px) {
+	.flexbox-container {
+		.event-content {
+			.event-body {
+				.col-xs-6 {
+					width: 100%;
+				}
+			}
+		}
 	}
 }
