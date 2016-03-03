@@ -35,7 +35,7 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 	var $pass = $('#password');
 	var $confPass = $('#confPass');
 	var $addr = $('#homeAddr');
-	var invalidChars = /[^A-z0-9\!\@\#\$\&\*\_ \.]/g;
+	var invalidChars = /[^A-z0-9\!\@\#\$\&\*\_ \.\?]/g;
 
 	$pass.popover({
 		container: 'body',
@@ -95,7 +95,7 @@ angular.module('eventinator').controller('eventSignupCtrl', ['$scope', '$locatio
 			upper: pwdVal.search(/[A-Z]/g) > -1,
 			lower: pwdVal.search(/[a-z]/g) > -1,
 			num: pwdVal.search(/[0-9]/g) > -1,
-			punct: pwdVal.search(/[!#$@\?&\*\_ \.]/g) > -1,
+			punct: pwdVal.search(/[!#$@\?\&\*\_ \.]/g) > -1,
 			chars: pwdVal.length >= 8,
 			invalidChars: pwdVal.search(invalidChars) > -1
 		};
