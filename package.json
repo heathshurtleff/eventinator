@@ -1,21 +1,21 @@
 {
-  "name": "eventinator",
+  "name": "udacity-nanodegree",
   "version": "1.0.0",
-  "description": "A web app for creating and viewing events",
+  "description": "A web site for displaying all of my projects for my Udacity Nanodegree",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/heathshurtleff/eventinator.git"
+    "url": "git+https://github.com/heathshurtleff/udacity-nanodegree.git"
   },
   "author": "Heath Shurtleff",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/heathshurtleff/eventinator/issues"
+    "url": "https://github.com/heathshurtleff/udacity-nanodegree/issues"
   },
-  "homepage": "https://github.com/heathshurtleff/eventinator#readme",
+  "homepage": "https://github.com/heathshurtleff/udacity-nanodegree#readme",
   "devDependencies": {
     "connect-livereload": "^0.5.4",
     "gulp": "^3.9.0",

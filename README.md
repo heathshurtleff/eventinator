@@ -1,4 +1,4 @@
-#Eventinator
+#Udacity Nanodegree
 > This project is a hub for all of the projects I'm doing for this Udacity Nanodegree.
 
 ##Requirements
