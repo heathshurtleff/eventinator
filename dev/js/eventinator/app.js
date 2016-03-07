@@ -7,17 +7,17 @@ angular.module('eventinator').config(['$stateProvider', '$urlRouterProvider', fu
 	$stateProvider
 		.state('main', {
 			url: '/',
-			templateUrl: 'app/main/eventList.html',
+			templateUrl: 'app/events/eventList.html',
 			controller: 'eventinatorCtrl'
 		})
 		.state('signup', {
 			url: '/signup',
-			templateUrl: 'app/signup/eventSignup.html',
+			templateUrl: 'app/events/eventSignup.html',
 			controller: 'eventSignupCtrl'
 		})
 		.state('create', {
 			url: '/create',
-			templateUrl: 'app/create/createEvent.html',
+			templateUrl: 'app/events/createEvent.html',
 			controller: 'createEventCtrl'
 		});
 }]);

@@ -16,6 +16,11 @@ module.exports = function(app) {
 			});
 		}
 	);
+	app.route('/transportinator')
+		.get(function(req,res) {
+			res.render('transport/index');
+		}
+	);
 
 	app.post('/app/eventUsers', eventUsers.createUser);
 	app.post('/app/eventLogin', auth.authenticateUser);

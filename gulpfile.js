@@ -45,6 +45,12 @@ gulp.task('sass', function() {
 		.pipe(mincss())
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('./public/css'));
+	gulp.src('dev/css/transportinator/transportinator.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest('./dist/css/transportinator'))
+		.pipe(mincss())
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest('./public/css'));
 });
 
 gulp.task('vendorjs', function() {
@@ -56,6 +62,16 @@ gulp.task('js', function() {
 	gulp.src(['./dev/js/eventinator/app.js', './dev/js/global/**/*.js', './dev/js/eventinator/**/*.js'])
 		.pipe(concat('eventinator.js'))
 		.pipe(gulp.dest('./dist/js/eventinator'))
+		.pipe(uglify({
+			compress: {
+				sequences: false
+			}
+		}))
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest('./public/app'));
+	gulp.src(['./dev/js/transportinator/app.js', './dev/js/transportinator/**/*.js'])
+		.pipe(concat('transportinator.js'))
+		.pipe(gulp.dest('./dist/js/transportinator'))
 		.pipe(uglify({
 			compress: {
 				sequences: false
