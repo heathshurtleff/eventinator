@@ -3,6 +3,7 @@
 var auth = require('./auth');
 var eventUsers = require('../controllers/evtUsers');
 var events = require('../controllers/events');
+var gtfs = require('../utils/gtfs');
 
 module.exports = function(app) {
 
@@ -21,6 +22,8 @@ module.exports = function(app) {
 			res.render('transport/index');
 		}
 	);
+
+	app.get('/app/gtfsData', gtfs.getStatic);
 
 	app.post('/app/eventUsers', eventUsers.createUser);
 	app.post('/app/eventLogin', auth.authenticateUser);
