@@ -1,0 +1,24 @@
+<div class="container">
+	<h1>Available Routes</h1>
+	<div class="table-responsive">
+		<table class="table table-striped table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>Route Number</th>
+					<th>Route Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="route in routes" data-route-id="{{route.route_id}}">
+					<td>{{route.route_short_name}}</td>
+					<td>{{route.route_long_name}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<!-- <ul>
+		<li ng-repeat="route in routes">
+			{{route.route_short_name}} {{route.route_long_name}}
+		</li>
+	</ul> -->
+</div>
