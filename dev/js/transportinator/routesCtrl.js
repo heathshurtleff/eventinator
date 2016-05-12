@@ -1,13 +1,22 @@
 /*global angular*/
 
-angular.module('transportinator').controller('routesController', ['$scope', function($scope) {
+angular.module('transportinator').controller('routesController', ['$scope', '$location', 'routesService', function($scope, $location, routesService) {
 	$scope.testvar = 'Itsa Work!';
-	$scope.routes = {};
-	fetch('/app/gtfsData?type=routes').then(function(response) {
-		return response.json();
-	}).then(function(json) {
+
+	routesService.getAllRoutes().then(function(data) {
 		$scope.$apply(function() {
-			$scope.routes = json;
+			$scope.routes = data;
 		});
 	});
+	routesService.getAllStops().then(function(data) {
+		$scope.$apply(function() {
+			$scope.stops = data;
+		});
+	});
+
+	$scope.fetchRouteUpdate = function(routeId) {
+		if(parseInt(routeId) <= 6) {
+			$location.path('/route/' + routeId);
+		}
+	};
 }]);

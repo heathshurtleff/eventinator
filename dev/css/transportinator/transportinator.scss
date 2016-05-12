@@ -4,5 +4,43 @@ body {
 	min-width: 320px;
 }
 h1 {
-	color: blue;
+	color: #444;
+	text-align: center;
+	margin-bottom: 40px;
+}
+.update-text {
+	margin-bottom: 40px;
+	text-align: center;
+}
+.route-list {
+	.row {
+		padding: 5px 0;
+		&.row-heading {
+			border-bottom: 1px solid $mg;
+			font-weight: bold;
+			font-size: 116.67%;
+		}
+	}
+	.route-rows {
+		.row {
+			border-top: 1px solid $mg;
+			cursor: pointer;
+			&:nth-child(odd) {
+				background-color: $lg;
+			}
+			&:hover {
+				background-color: darken($lg, 2%);
+			}
+		}
+	}
+	.col-xs-1 {
+		text-align: center;
+	}
+}
+.route-times-table {
+	overflow: scroll;
+	th, td {
+		min-width: 120px;
+		text-align: center;
+	}
 }

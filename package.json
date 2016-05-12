@@ -24,20 +24,25 @@
     "gulp-live-server": "0.0.29",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
-    "gulp-uglify": "^1.5.1"
+    "gulp-uglify": "^1.5.1",
+    "underscore": "^1.8.3"
   },
   "dependencies": {
     "body-parser": "^1.14.2",
     "cookie-parser": "^1.4.1",
     "crypto": "0.0.3",
-    "csvjson": "^1.0.5",
-    "csvtojson": "^0.5.2",
+    "csv-parse": "^1.1.0",
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-session": "^1.13.0",
+    "gtfs": "^0.4.4",
     "mongoose": "^4.3.5",
+    "mta-gtfs": "^1.0.1",
+    "node-fetch": "^1.5.2",
     "passport": "^0.3.2",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "protobufjs": "^5.0.1",
+    "request": "^2.72.0"
   },
   "engines": {
     "node": "0.12.7",

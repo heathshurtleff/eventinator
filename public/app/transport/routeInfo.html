@@ -1,2 +1,26 @@
-<h1>Route Info</h1>
-{{testVar}}
+<h1>Route {{routeId}} Info</h1>
+<div class="container">
+	<div class="col-xs-12">
+		Last Update: {{lastUpdate | date: 'short'}}
+	</div>
+</div>
+<div class="container route-times-table">
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th ng-repeat="stop in stops" data-stop-id="{{stop.stop_id}}">
+						{{stop.stop_name}}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="trip in trips" data-trip-id="{{trip.trip_id}}">
+					<td ng-repeat="stoptime in trip.stoptimes">
+						{{stoptime.departure_time}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
