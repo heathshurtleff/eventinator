@@ -12,6 +12,9 @@ h1 {
 	margin-bottom: 40px;
 	text-align: center;
 }
+.updated-info {
+	color: $update;
+}
 .route-list {
 	.row {
 		padding: 5px 0;
@@ -40,7 +43,10 @@ h1 {
 .route-times-table {
 	overflow: scroll;
 	th, td {
-		min-width: 120px;
+		min-width: 100px;
 		text-align: center;
+	}
+	.updated-time {
+		color: $update;
 	}
 }
