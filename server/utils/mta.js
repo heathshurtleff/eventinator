@@ -24,7 +24,6 @@ exports.allRoutes = function(req, res) {
 	}).then(function(response) {
 		res.send(response);
 	});
-
 };
 exports.allStops = function(req, res) {
 	var stops = fs.readFileSync(path.join(__dirname, '../data/mta-gtfs/stops.txt'));
