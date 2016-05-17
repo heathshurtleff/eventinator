@@ -1,22 +1,42 @@
 /*global angular, _ */
 
-angular.module('transportinator').factory('routesService', function() {
+angular.module('transportinator').factory('routesService', ['idbService', function(idbService) {
 	var allRoutes;
 	return {
 		getAllRoutes: function() {
 			if(allRoutes !== undefined) return allRoutes;
-			return fetch('/app/mtaData').then(function(response) {
-				return response.json();
-			}).then(function(routes) {
-				allRoutes = new Promise(function(resolve, reject) {
-					if(!routes) reject('No routes found');
-
-					resolve(routes);
+			return new Promise(function(resolve, reject) {
+				idbService.getRoutes().then(function(data) {
+					if(data.length > 0) {
+						resolve(data);
+					} else {
+						fetch('/app/mtaData').then(function(response) {
+							return response.json();
+						}).then(function(routes) {
+							if(!routes) reject('No routes found');
+							idbService.saveRoutes(routes).then(function() {
+								resolve(routes);
+							});
+						}).catch(function(err) {
+							reject(err);
+						});
+					}
 				});
-				return routes;
-			}).catch(function(err) {
-				console.log(err);
 			});
+
+			// return fetch('/app/mtaData').then(function(response) {
+			// 	return response.json();
+			// }).then(function(routes) {
+			// 	allRoutes = new Promise(function(resolve, reject) {
+			// 		if(!routes) reject('No routes found');
+			// 		idbService.saveRoutes(routes).then(function() {
+			// 			resolve(routes);
+			// 		});
+			// 	});
+			// 	return routes;
+			// }).catch(function(err) {
+			// 	console.log(err);
+			// });
 		},
 		getAllStops: function() {
 			return fetch('/app/mtaStops').then(function(response) {
@@ -80,4 +100,4 @@ angular.module('transportinator').factory('routesService', function() {
 			});
 		}
 	};
-});
+}]);

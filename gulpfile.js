@@ -8,6 +8,7 @@ var mincss = require('gulp-cssmin');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var babel = require('gulp-babel');
 
 gulp.task('default', ['vendorcss', 'vendorjs'], function() {
 
@@ -70,6 +71,9 @@ gulp.task('js', function() {
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('./public/app'));
 	gulp.src(['./dev/js/transportinator/app.js', './dev/js/transportinator/**/*.js'])
+		.pipe(babel({
+			presets: ['es2015']
+		}))
 		.pipe(concat('transportinator.js'))
 		.pipe(gulp.dest('./dist/js/transportinator'))
 		.pipe(uglify({

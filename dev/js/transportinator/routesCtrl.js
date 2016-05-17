@@ -5,14 +5,10 @@ angular.module('transportinator').controller('routesController', ['$scope', '$lo
 
 	routesService.getAllRoutes().then(function(data) {
 		$scope.$apply(function() {
+			
 			$scope.routes = data;
 		});
 	});
-	// routesService.getAllStops().then(function(data) {
-	// 	$scope.$apply(function() {
-	// 		$scope.stops = data;
-	// 	});
-	// });
 
 	$scope.fetchRouteUpdate = function(routeId) {
 		if(parseInt(routeId) <= 6) {
