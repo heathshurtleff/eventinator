@@ -3,6 +3,7 @@
 angular.module('transportinator').controller('routeInfoController', ['$scope', '$filter', '$stateParams', 'routesService', function($scope, $filter, $stateParams, routesService) {
 	var $allTimes = $('.route-times-table td');
 	$scope.routeId = $stateParams.id;
+	$scope.hasRealtimeAccess = (parseInt($stateParams.id) <= 6 && $stateParams.id.indexOf('X') === -1);
 
 	routesService.getStopsForRoute($scope.routeId).then(function(stops) {
 		$scope.$apply(function() {
@@ -32,7 +33,7 @@ angular.module('transportinator').controller('routeInfoController', ['$scope', '
 		});
 		$scope.$apply(function() {
 			$scope.trips = sortedTrips;
-			getRouteUpdate();
+			if($scope.hasRealtimeAccess) getRouteUpdate();
 		});
 	});
 

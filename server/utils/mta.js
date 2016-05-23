@@ -9,7 +9,7 @@ var gtfs = require('gtfs');
 var _ = require('underscore');
 
 var config = {
-	apiKey: process.env.MTA_API_KEY || '9e9ef97c85d98b3378011409f0f895d1',
+	apiKey: process.env.MTA_API_KEY,
 	feedId: 1
 };
 
@@ -19,6 +19,10 @@ exports.allRoutes = function(req, res) {
 		gtfs.getRoutesByAgency('MTA', function(err, routes) {
 			if(err) return reject(err);
 			var sorted = _.sortBy(routes, 'route_short_name');
+			var excludeMe = _.findIndex(sorted, function(item) {
+				return item.route_id === '5X';
+			});
+			sorted.splice(excludeMe, 1);
 			resolve(sorted);
 		});
 	}).then(function(response) {
@@ -56,6 +60,7 @@ exports.stopsForRoute = function(req, res) {
 			resolve(stops);
 		});
 	}).then(function(response) {
+		//console.log(response);
 		res.send(response);
 	});
 };
@@ -71,7 +76,8 @@ exports.stopTimesForStop = function(req, res) {
 };
 exports.tripsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, 0, 'A20151206WKD', function(err, trips) {
+		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, 0, ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
+			//console.log(err, trips);
 			if(err) return reject(err);
 			resolve(trips);
 		});

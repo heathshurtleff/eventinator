@@ -306,7 +306,6 @@ angular.module('transportinator').factory('idbService', function() {
 				return;
 			}
 			return idb.open('transport', 2, function(upgradeDb) {
-				console.log('in the update function?');
 				upgradeDb.createObjectStore('routes');
 			});
 		},

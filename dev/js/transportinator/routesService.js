@@ -23,20 +23,6 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 					}
 				});
 			});
-
-			// return fetch('/app/mtaData').then(function(response) {
-			// 	return response.json();
-			// }).then(function(routes) {
-			// 	allRoutes = new Promise(function(resolve, reject) {
-			// 		if(!routes) reject('No routes found');
-			// 		idbService.saveRoutes(routes).then(function() {
-			// 			resolve(routes);
-			// 		});
-			// 	});
-			// 	return routes;
-			// }).catch(function(err) {
-			// 	console.log(err);
-			// });
 		},
 		getAllStops: function() {
 			return fetch('/app/mtaStops').then(function(response) {
