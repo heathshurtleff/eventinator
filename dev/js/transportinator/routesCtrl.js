@@ -9,7 +9,6 @@ angular.module('transportinator').controller('routesController', ['$scope', '$lo
 	});
 
 	$scope.fetchRouteUpdate = function(routeId) {
-		console.log(routeId);
 		$location.path('/route/' + routeId);
 	};
 }]);

@@ -1,4 +1,5 @@
 /*eslint-env node */
+/* global Promise */
 
 var fs = require('fs');
 var path = require('path');
@@ -27,6 +28,8 @@ exports.allRoutes = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.allStops = function(req, res) {
@@ -39,6 +42,8 @@ exports.allStops = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.getRouteUpdate = function(req, res) {
@@ -60,8 +65,9 @@ exports.stopsForRoute = function(req, res) {
 			resolve(stops);
 		});
 	}).then(function(response) {
-		//console.log(response);
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.stopTimesForStop = function(req, res) {
@@ -72,17 +78,20 @@ exports.stopTimesForStop = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.tripsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
 		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, 0, ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
-			//console.log(err, trips);
 			if(err) return reject(err);
 			resolve(trips);
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.stopTimesForTrip = function(req, res) {
@@ -93,5 +102,7 @@ exports.stopTimesForTrip = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
