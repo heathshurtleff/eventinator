@@ -3,6 +3,7 @@
 var auth = require('./auth');
 var eventUsers = require('../controllers/evtUsers');
 var events = require('../controllers/events');
+var mta = require('../utils/mta');
 
 module.exports = function(app) {
 
@@ -16,6 +17,19 @@ module.exports = function(app) {
 			});
 		}
 	);
+	app.route('/transportinator')
+		.get(function(req,res) {
+			res.render('transport/index');
+		}
+	);
+
+	app.get('/app/mtaData', mta.allRoutes);
+	app.get('/app/mtaStops', mta.allStops);
+	app.get('/app/mtaStops/:routeId', mta.stopsForRoute);
+	app.get('/app/mtaTrips/:routeId', mta.tripsForRoute);
+	app.get('/app/mtaStopTimes/trip/:tripId', mta.stopTimesForTrip);
+	app.get('app/mtaStopTimes/:routeId/:stopId', mta.stopTimesForStop);
+	app.get('/app/mtaUpdate/:routeId', mta.getRouteUpdate);
 
 	app.post('/app/eventUsers', eventUsers.createUser);
 	app.post('/app/eventLogin', auth.authenticateUser);

@@ -1,4 +1,4 @@
-#Eventinator
+#Udacity Nanodegree
 > This project is a hub for all of the projects I'm doing for this Udacity Nanodegree.
 
 ##Requirements
@@ -14,5 +14,6 @@
 2. Run `npm i` to install the required node modules
 3. Run `bower install` to install the third party libraries
 4. Run `gulp` to generate the CSS and JS for the site
-5. Run `gulp serve` to start the server running
-6. Go to localhost:3033 in your favorite browser
+5. Run `node node_modules/gtfs/scripts/download.js` to save the train info to your local MongoDB. This is needed for the transportinator project.
+6. Run `gulp serve` to start the server running
+7. Go to localhost:3033 in your favorite browser

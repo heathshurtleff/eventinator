@@ -1,0 +1,26 @@
+<h1>Route {{routeId}} Info</h1>
+<div class="container">
+	<div class="col-xs-12" ng-show="hasRealtimeAccess">
+		Last Update: {{lastUpdate | date: 'short'}} (times listed in <span class="updated-info">red</span> have been updated)
+	</div>
+</div>
+<div class="container route-times-table">
+	<div class="table-responsive">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th ng-repeat="stop in stops" data-stop-id="{{stop.stop_id}}">
+						{{stop.stop_name}}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="trip in trips" data-trip-id="{{trip.trip_id}}">
+					<td ng-repeat="stoptime in trip.stoptimes" data-stop-id="{{stoptime.stop_id}}">
+						{{stoptime.departure_time | date: 'hh:mm:ss a'}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

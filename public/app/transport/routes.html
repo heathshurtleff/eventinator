@@ -1,0 +1,29 @@
+<div class="container">
+	<h1>NYC Subway Schedule</h1>
+	<div class="container update-text">
+		Click on a route to view the full schedule for that route.<br />(Real time updates only available for routes 1-6)
+	</div>
+	<div class="container route-list">
+		<div class="row row-heading">
+			<div class="col-xs-1">Number</div>
+			<div class="col-xs-3">Route Name</div>
+			<div class="col-xs-7">Route Description</div>
+			<div class="col-xs-1">PDF</div>
+		</div>
+		<div class="route-rows">
+			<div class="row" ng-repeat="route in routes">
+				<div class="col-xs-1" ng-click="fetchRouteUpdate(route.route_id)">{{route.route_id}}</div>
+				<div class="col-xs-3" ng-click="fetchRouteUpdate(route.route_id)">{{route.route_long_name}}</div>
+				<div class="col-xs-7" ng-click="fetchRouteUpdate(route.route_id)">{{route.route_desc}}</div>
+				<div class="col-xs-1">
+					<a href="{{route.route_url}}" target="_blank"><i class="glyphicon glyphicon-list-alt"></i></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- <ul>
+		<li ng-repeat="route in routes.entity | filter:hasTripUpdate">
+			{{route.trip_update.trip.route_id}}
+		</li>
+	</ul> -->
+</div>

@@ -8,8 +8,9 @@ var mincss = require('gulp-cssmin');
 var rename = require('gulp-rename');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
+var babel = require('gulp-babel');
 
-gulp.task('default', ['vendorcss', 'vendorjs'], function() {
+gulp.task('default', ['vendorcss', 'vendorjs', 'setupGtfsConfig'], function() {
 
 });
 
@@ -45,10 +46,16 @@ gulp.task('sass', function() {
 		.pipe(mincss())
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('./public/css'));
+	gulp.src('dev/css/transportinator/transportinator.scss')
+		.pipe(sass().on('error', sass.logError))
+		.pipe(gulp.dest('./dist/css/transportinator'))
+		.pipe(mincss())
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest('./public/css'));
 });
 
 gulp.task('vendorjs', function() {
-	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js', 'bower_components/toastr/toastr.min.js'])
+	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js', 'bower_components/toastr/toastr.min.js', 'bower_components/underscore/underscore-min.js'])
 		.pipe(gulp.dest('./public/js/vendor'));
 });
 
@@ -63,4 +70,23 @@ gulp.task('js', function() {
 		}))
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('./public/app'));
+	gulp.src(['./dev/js/transportinator/app.js', './dev/js/transportinator/**/*.js'])
+		.pipe(babel({
+			presets: ['es2015']
+		}))
+		.pipe(concat('transportinator.js'))
+		.pipe(gulp.dest('./dist/js/transportinator'))
+		.pipe(uglify({
+			compress: {
+				sequences: false
+			}
+		}))
+		.pipe(rename({suffix: '.min'}))
+		.pipe(gulp.dest('./public/app'));
+});
+
+gulp.task('setupGtfsConfig', function() {
+	gulp.src('./server/config/mtaConfig.js')
+		.pipe(rename('config.js'))
+		.pipe(gulp.dest('./node_modules/gtfs'));
 });
