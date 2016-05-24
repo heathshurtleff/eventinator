@@ -10,7 +10,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 
-gulp.task('default', ['vendorcss', 'vendorjs'], function() {
+gulp.task('default', ['vendorcss', 'vendorjs', 'setupGtfsConfig'], function() {
 
 });
 
@@ -83,4 +83,10 @@ gulp.task('js', function() {
 		}))
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('./public/app'));
+});
+
+gulp.task('setupGtfsConfig', function() {
+	gulp.src('./server/config/mtaConfig.js')
+		.pipe(rename('config.js'))
+		.pipe(gulp.dest('./node_modules/gtfs'));
 });
