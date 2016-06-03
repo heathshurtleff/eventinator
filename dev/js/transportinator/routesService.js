@@ -31,15 +31,15 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 				return trips;
 			});
 		},
-		getStopsForRoute: function(routeId) {
-			return fetch('/app/mtaStops/' + routeId).then(function(response) {
+		getStopsForRoute: function(routeId, direction) {
+			return fetch('/app/mtaStops/' + routeId + '/' + direction).then(function(response) {
 				return response.json();
 			}).then(function(data) {
 				return data;
 			});
 		},
-		getTripsForRoute: function(routeId) {
-			return fetch('/app/mtaTrips/' + routeId).then(function(response) {
+		getTripsForRoute: function(routeId, dir) {
+			return fetch('/app/mtaTrips/' + routeId + '/' + dir).then(function(response) {
 				return response.json();
 			}).then(function(data) {
 				return data;
@@ -50,6 +50,15 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 				return response.json();
 			}).then(function(data) {
 				return data;
+			});
+		},
+		getStoptimesForStop: function(routeId, stopId, direction) {
+			return fetch('/app/mtaStopTimes/' + routeId + '/' + stopId + '/' + direction).then(function(response) {
+				return response.json();
+			}).then(function(data) {
+				return data;
+			}).catch(function(err) {
+				console.log(err);
 			});
 		},
 		getRouteUpdate: function(routeId) {

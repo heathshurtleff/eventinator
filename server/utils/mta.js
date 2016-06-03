@@ -10,7 +10,7 @@ var gtfs = require('gtfs');
 var _ = require('underscore');
 
 var config = {
-	apiKey: process.env.MTA_API_KEY,
+	apiKey: process.env.MTA_API_KEY || '9e9ef97c85d98b3378011409f0f895d1',
 	feedId: 1
 };
 
@@ -60,7 +60,7 @@ exports.getRouteUpdate = function(req, res) {
 };
 exports.stopsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getStopsByRoute('MTA', req.params.routeId, 0, function(err, stops) {
+		gtfs.getStopsByRoute('MTA', req.params.routeId, parseInt(req.params.dir), function(err, stops) {
 			if(err) return reject(err);
 			resolve(stops);
 		});
@@ -72,7 +72,7 @@ exports.stopsForRoute = function(req, res) {
 };
 exports.stopTimesForStop = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getStoptimesByStop('MTA', req.params.routeId, req.params.stopId, '0', function(err, stoptimes) {
+		gtfs.getStoptimesByStop('MTA', req.params.routeId, req.params.stopId, req.params.dir, function(err, stoptimes) {
 			if(err) return reject(err);
 			resolve(stoptimes);
 		});
@@ -84,7 +84,7 @@ exports.stopTimesForStop = function(req, res) {
 };
 exports.tripsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, 0, ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
+		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, parseInt(req.params.dir), ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
 			if(err) return reject(err);
 			resolve(trips);
 		});
