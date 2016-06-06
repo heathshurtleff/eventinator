@@ -6,12 +6,7 @@ var urlsToCache = [
 	'/css/vendor/bootstrap.min.css',
 	'/css/transportinator.min.css',
 	'/css/fonts/glyphicons-halflings-regular.woff2',
-	'/js/vendor/jquery.min.js',
-	'/js/vendor/angular.min.js',
-	'/js/vendor/angular-ui-router.min.js',
-	'/js/vendor/angular-resource.min.js',
-	'/js/vendor/bootstrap.min.js',
-	'/js/vendor/underscore-min.js',
+	'/js/vendor/allVendors.js',
 	'/app/transportinator.min.js'
 ];
 var allCaches = [
