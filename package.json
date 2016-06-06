@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "npm run build && npm run alertBuild",
-		"build": "gulp",
-		"alertBuild": "echo Build Completed!",
-		"start": "node server.js"
+    "build": "gulp",
+    "alertBuild": "echo Build Completed!",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -35,14 +35,15 @@
     "express": "^4.13.3",
     "express-session": "^1.13.0",
     "gtfs": "^0.4.4",
-		"gulp": "^3.9.0",
-		"gulp-babel": "^6.1.2",
-		"gulp-concat": "^2.6.0",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^6.1.2",
+    "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.1.7",
-		"gulp-live-server": "0.0.29",
-		"gulp-rename": "^1.2.2",
+    "gulp-live-server": "0.0.29",
+    "gulp-rename": "^1.2.2",
     "gulp-sass": "^2.1.1",
     "gulp-uglify": "^1.5.3",
+    "lodash": "3.10.1",
     "mongoose": "^4.3.5",
     "mta-gtfs": "^1.0.1",
     "node-fetch": "^1.5.2",
@@ -50,7 +51,7 @@
     "passport-local": "^1.0.0",
     "protobufjs": "^5.0.1",
     "request": "^2.72.0",
-		"underscore": "^1.8.3"
+    "underscore": "^1.8.3"
   },
   "engines": {
     "node": "4.1.x",
