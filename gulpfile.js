@@ -55,7 +55,8 @@ gulp.task('sass', function() {
 });
 
 gulp.task('vendorjs', function() {
-	gulp.src(['bower_components/angular/*.min.*', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/*.min.js', 'bower_components/jquery/dist/*.min.*', 'bower_components/bootstrap/dist/js/*.min.js', 'bower_components/toastr/toastr.min.js', 'bower_components/underscore/underscore-min.js'])
+	gulp.src(['bower_components/jquery/dist/jquery.min.js', 'bower_components/angular/angular.min.js', 'bower_components/angular-ui-router/release/*.min.js', 'bower_components/angular-resource/angular-resource.min.js', 'bower_components/bootstrap/dist/js/*.min.js', 'bower_components/toastr/toastr.min.js', 'bower_components/underscore/underscore-min.js'])
+		.pipe(concat('allVendors.js'))
 		.pipe(gulp.dest('./public/js/vendor'));
 });
 

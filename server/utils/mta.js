@@ -1,4 +1,5 @@
 /*eslint-env node */
+/* global Promise */
 
 var fs = require('fs');
 var path = require('path');
@@ -9,7 +10,7 @@ var gtfs = require('gtfs');
 var _ = require('underscore');
 
 var config = {
-	apiKey: process.env.MTA_API_KEY,
+	apiKey: process.env.MTA_API_KEY || '9e9ef97c85d98b3378011409f0f895d1',
 	feedId: 1
 };
 
@@ -27,6 +28,8 @@ exports.allRoutes = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.allStops = function(req, res) {
@@ -39,6 +42,8 @@ exports.allStops = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.getRouteUpdate = function(req, res) {
@@ -55,34 +60,38 @@ exports.getRouteUpdate = function(req, res) {
 };
 exports.stopsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getStopsByRoute('MTA', req.params.routeId, 0, function(err, stops) {
+		gtfs.getStopsByRoute('MTA', req.params.routeId, parseInt(req.params.dir), function(err, stops) {
 			if(err) return reject(err);
 			resolve(stops);
 		});
 	}).then(function(response) {
-		//console.log(response);
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.stopTimesForStop = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getStoptimesByStop('MTA', req.params.routeId, req.params.stopId, '0', function(err, stoptimes) {
+		gtfs.getStoptimesByStop('MTA', req.params.routeId, req.params.stopId, req.params.dir, function(err, stoptimes) {
 			if(err) return reject(err);
 			resolve(stoptimes);
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.tripsForRoute = function(req, res) {
 	return new Promise(function(resolve, reject) {
-		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, 0, ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
-			//console.log(err, trips);
+		gtfs.getTripsByRouteAndDirection('MTA', req.params.routeId, parseInt(req.params.dir), ['A20151206WKD', 'B20151206SUN', 'B20151206WKD', 'R20150510WKD'], function(err, trips) {
 			if(err) return reject(err);
 			resolve(trips);
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };
 exports.stopTimesForTrip = function(req, res) {
@@ -93,5 +102,7 @@ exports.stopTimesForTrip = function(req, res) {
 		});
 	}).then(function(response) {
 		res.send(response);
+	}).catch(function(err) {
+		console.log(err);
 	});
 };

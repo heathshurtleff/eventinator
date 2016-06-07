@@ -1,4 +1,4 @@
-/*global angular, _ */
+/*global angular, _, Promise */
 
 angular.module('transportinator').factory('routesService', ['idbService', function(idbService) {
 	var allRoutes;
@@ -31,32 +31,18 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 				return trips;
 			});
 		},
-		getStopsForRoute: function(routeId) {
-			return fetch('/app/mtaStops/' + routeId).then(function(response) {
+		getStopsForRoute: function(routeId, direction) {
+			return fetch('/app/mtaStops/' + routeId + '/' + direction).then(function(response) {
 				return response.json();
 			}).then(function(data) {
 				return data;
 			});
 		},
-		getTripsForRoute: function(routeId) {
-			return fetch('/app/mtaTrips/' + routeId).then(function(response) {
+		getTripsForRoute: function(routeId, dir) {
+			return fetch('/app/mtaTrips/' + routeId + '/' + dir).then(function(response) {
 				return response.json();
 			}).then(function(data) {
 				return data;
-			}).then(function(trips) {
-				return new Promise(function(resolve, reject) {
-					if(!trips || trips.length === 0) reject('No trips found!');
-					_.each(trips, function(trip) {
-						fetch('/app/mtaStopTimes/trip/' + trip.trip_id).then(function(response) {
-							return response.json();
-						}).then(function(data) {
-							trip.stoptimes = data;
-							if(trips.indexOf(trip) + 1 === trips.length) {
-								resolve(trips);
-							}
-						});
-					});
-				});
 			});
 		},
 		getStopTimesByTrip: function(tripId) {
@@ -64,6 +50,15 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 				return response.json();
 			}).then(function(data) {
 				return data;
+			});
+		},
+		getStoptimesForStop: function(routeId, stopId, direction) {
+			return fetch('/app/mtaStopTimes/' + routeId + '/' + stopId + '/' + direction).then(function(response) {
+				return response.json();
+			}).then(function(data) {
+				return data;
+			}).catch(function(err) {
+				console.log(err);
 			});
 		},
 		getRouteUpdate: function(routeId) {

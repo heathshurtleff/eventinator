@@ -25,10 +25,10 @@ module.exports = function(app) {
 
 	app.get('/app/mtaData', mta.allRoutes);
 	app.get('/app/mtaStops', mta.allStops);
-	app.get('/app/mtaStops/:routeId', mta.stopsForRoute);
-	app.get('/app/mtaTrips/:routeId', mta.tripsForRoute);
+	app.get('/app/mtaStops/:routeId/:dir', mta.stopsForRoute);
+	app.get('/app/mtaTrips/:routeId/:dir', mta.tripsForRoute);
 	app.get('/app/mtaStopTimes/trip/:tripId', mta.stopTimesForTrip);
-	app.get('app/mtaStopTimes/:routeId/:stopId', mta.stopTimesForStop);
+	app.get('/app/mtaStopTimes/:routeId/:stopId/:dir', mta.stopTimesForStop);
 	app.get('/app/mtaUpdate/:routeId', mta.getRouteUpdate);
 
 	app.post('/app/eventUsers', eventUsers.createUser);
