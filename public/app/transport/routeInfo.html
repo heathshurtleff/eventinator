@@ -1,23 +1,23 @@
-<h1>Route {{routeId}} Info</h1>
+<h1>Route {{routeId}} Info <a href="#/routes">return to route selection</a></h1>
 <div class="container">
 	<div class="col-xs-12 realtime-updater" ng-show="hasRealtimeAccess">
 		Last Update: {{lastUpdate | date: 'short'}} (times listed in <span class="updated-info">red</span> have been updated)
 	</div>
 	<h4>Make a selection to see train times</h4>
-	<div class="col-xs-3">
+	<div class="col-md-3">
 		<label for="tripDirection">Train Direction:</label>
 		<select class="something" name="tripDirection" ng-model="tripDirection" ng-change="getStops()">
 			<option value="0">North</option>
 			<option value="1">South</option>
 		</select>
 	</div>
-	<div class="col-xs-5">
+	<div class="col-md-5">
 		<label for="tripStart">Starting Stop:</label>
 		<select class="something" name="tripStart" ng-model="tripStart" ng-change="getAvailableEndStops()">
 			<option ng-repeat="stop in stops" value="{{stop.stop_id}}">{{stop.stop_name}}</option>
 		</select>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-md-4">
 		<label for="tripEnd">Ending Stop:</label>
 		<select class="something" name="tripEnd" ng-model="tripEnd" ng-change="displayStopTimes()">
 			<option ng-repeat="stop in endStops" value="{{stop.stop_id}}">{{stop.stop_name}}</option>

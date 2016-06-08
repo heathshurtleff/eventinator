@@ -7,6 +7,11 @@ h1 {
 	color: #444;
 	text-align: center;
 	margin-bottom: 40px;
+	a {
+		font-size: 40%;
+		font-weight: normal;
+		padding-left: 50px;
+	}
 }
 h4 {
 	text-align: center;
@@ -49,11 +54,22 @@ h4 {
 }
 .route-times-table {
 	overflow: scroll;
+	margin-top: 20px;
 	th, td {
 		min-width: 100px;
 		text-align: center;
 	}
 	.updated-time {
 		color: $update;
+	}
+}
+@media screen and (max-width: 767px) {
+	h1 a {
+		display: block;
+		padding-left: 0;
+		padding-top: 12px;
+	}
+	.route-list .col-xs-5 {
+		display: none;
 	}
 }

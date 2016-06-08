@@ -1,16 +1,23 @@
 /*global angular, _, $, Promise */
 
-angular.module('transportinator').controller('routeInfoController', ['$scope', '$filter', '$stateParams', 'routesService', function($scope, $filter, $stateParams, routesService) {
+angular.module('transportinator').controller('routeInfoController', ['$scope', '$filter', '$stateParams', 'routesService', 'idbService', function($scope, $filter, $stateParams, routesService, idbService) {
 	var $allTimes = $('.route-times-table td');
 	$scope.routeId = $stateParams.id;
-	$scope.hasRealtimeAccess = (parseInt($stateParams.id) <= 6 && $stateParams.id.indexOf('X') === -1);
+	$scope.hasRealtimeAccess = false;
 
 	$scope.getStops = function() {
-		routesService.getStopsForRoute($scope.routeId, $scope.tripDirection).then(function(stops) {
-			$scope.$apply(function() {
-				$scope.stops = stops;
+		var indexedStops = idbService.getRouteStops($scope.routeId, $scope.tripDirection);
+		indexedStops.then(function(allStops) {
+			if(allStops && allStops.length !== 0) {
+				$scope.stops = allStops.stops;
 				getTripsData();
-			});
+			} else {
+				routesService.getStopsForRoute($scope.routeId, $scope.tripDirection).then(function(stops) {
+					$scope.stops = stops;
+					idbService.saveRouteStops($scope.routeId, $scope.tripDirection, stops);
+					getTripsData();
+				});
+			}
 		});
 	};
 
@@ -59,36 +66,51 @@ angular.module('transportinator').controller('routeInfoController', ['$scope', '
 	};
 
 	function getTripsData() {
-		var rawTrips;
-		routesService.getTripsForRoute($scope.routeId, $scope.tripDirection).then(function(trips) {
-			rawTrips = trips;
-			fecthStoptimesPerTrip().then(function() {
-				var routeStops = $scope.stops.length;
-				var sortedTrips = _.sortBy(trips, function(trip) {
-					return trip.stoptimes[0].departure_time;
-				});
-				_.each(sortedTrips, function(trip) {
-					var newStopArray = [];
-					if(trip.stoptimes.length !== routeStops) {
-						_.each($scope.stops, function(stop, idx) {
-							var matchingStoptime = _.find(trip.stoptimes, function(stoptime) {
-								return stoptime.stop_id === stop.stop_id;
-							});
-							if(matchingStoptime) {
-								newStopArray[idx] = matchingStoptime;
-							} else {
-								newStopArray[idx] = {stop_id: stop.stop_id, departure_time: '--'};
-							}
-						});
-						trip.stoptimes = newStopArray;
-					}
-				});
+		var indexedTrips = idbService.getSpecificRoute($scope.routeId, $scope.tripDirection);
+		indexedTrips.then(function(fullRoute) {
+			if (fullRoute === undefined) {
+				sortTrips();
+			} else {
 				$scope.$apply(function() {
-					$scope.trips = sortedTrips;
-					if($scope.hasRealtimeAccess) getRouteUpdate();
+					$scope.trips = fullRoute.trips;
+					if(parseInt($stateParams.id) <= 6 && $stateParams.id.indexOf('X') === -1) getRouteUpdate();
+				});
+			}
+		});
+
+		var rawTrips;
+		function sortTrips() {
+			routesService.getTripsForRoute($scope.routeId, $scope.tripDirection).then(function(trips) {
+				rawTrips = trips;
+				fecthStoptimesPerTrip().then(function() {
+					var routeStops = $scope.stops.length;
+					var sortedTrips = _.sortBy(trips, function(trip) {
+						return trip.stoptimes[0].departure_time;
+					});
+					_.each(sortedTrips, function(trip) {
+						var newStopArray = [];
+						if(trip.stoptimes.length !== routeStops) {
+							_.each($scope.stops, function(stop, idx) {
+								var matchingStoptime = _.find(trip.stoptimes, function(stoptime) {
+									return stoptime.stop_id === stop.stop_id;
+								});
+								if(matchingStoptime) {
+									newStopArray[idx] = matchingStoptime;
+								} else {
+									newStopArray[idx] = {stop_id: stop.stop_id, departure_time: '--'};
+								}
+							});
+							trip.stoptimes = newStopArray;
+						}
+					});
+					$scope.$apply(function() {
+						$scope.trips = sortedTrips;
+						idbService.saveSpecificRoute($scope.routeId, $scope.tripDirection, sortedTrips);
+						if(parseInt($stateParams.id) <= 6 && $stateParams.id.indexOf('X') === -1) getRouteUpdate();
+					});
 				});
 			});
-		});
+		}
 
 		var currentIndex = 0;
 		function fecthStoptimesPerTrip() {
@@ -122,6 +144,7 @@ angular.module('transportinator').controller('routeInfoController', ['$scope', '
 	function getRouteUpdate() {
 		routesService.getRouteUpdate($scope.routeId).then(function(updateData) {
 			$scope.$apply(function() {
+				$scope.hasRealtimeAccess = true;
 				$scope.lastUpdate = updateData.timestamp;
 			});
 			$allTimes.removeClass('updated-time');
@@ -150,6 +173,8 @@ angular.module('transportinator').controller('routeInfoController', ['$scope', '
 				}
 			});
 			setTimeout(getRouteUpdate, 6000);
+		}).catch(function() {
+			$scope.hasRealtimeAccess = false;
 		});
 	}
 }]);

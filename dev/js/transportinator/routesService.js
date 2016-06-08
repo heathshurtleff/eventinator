@@ -64,6 +64,8 @@ angular.module('transportinator').factory('routesService', ['idbService', functi
 		getRouteUpdate: function(routeId) {
 			return fetch('/app/mtaUpdate/' + routeId).then(function(response) {
 				return response.json();
+			}).catch(function(err) {
+				console.log(err);
 			}).then(function(updateData) {
 				var updatedRouteData = {};
 				updatedRouteData.timestamp = new Date().getTime();

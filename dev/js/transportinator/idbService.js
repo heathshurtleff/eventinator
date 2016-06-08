@@ -1,4 +1,4 @@
-/*global angular*/
+/*global angular, Promise, module, idb*/
 (function() {
 	function toArray(arr) {
 		return Array.prototype.slice.call(arr);
@@ -305,8 +305,16 @@ angular.module('transportinator').factory('idbService', function() {
 			if(!navigator.serviceWorker) {
 				return;
 			}
-			return idb.open('transport', 2, function(upgradeDb) {
-				upgradeDb.createObjectStore('routes');
+			return idb.open('transport', 5, function(upgradeDb) {
+				switch (upgradeDb.oldVersion) {
+				case 1:
+				case 2:
+					upgradeDb.createObjectStore('routes');
+				case 3:
+					upgradeDb.createObjectStore('selectedRoute');
+				case 4:
+					upgradeDb.createObjectStore('routeStops');
+				}
 			});
 		},
 		getRoutes: function() {
@@ -331,6 +339,59 @@ angular.module('transportinator').factory('idbService', function() {
 					store.put(route, route.route_id);
 				});
 				return tx.complete;
+			});
+		},
+		getRouteStops: function(routeId, dir) {
+			var database = this.getDatabase();
+			if(!database) return;
+
+			var shortDir = 'N';
+			if(parseInt(dir) !== 0) shortDir = 'S';
+			return database.then(function(db) {
+				var tx = db.transaction('routeStops', 'readwrite');
+				var store = tx.objectStore('routeStops');
+				return store.get(routeId + shortDir);
+			});
+		},
+		saveRouteStops: function(routeId, dir, stops) {
+			var database = this.getDatabase();
+
+			if(!database) return;
+
+			var shortDir = 'N';
+			if(parseInt(dir) !== 0) shortDir = 'S';
+			return database.then(function(db) {
+				var tx = db.transaction('routeStops', 'readwrite');
+				var store = tx.objectStore('routeStops');
+				var allStops = {route_id: routeId, stops: stops};
+				store.put(allStops, routeId + shortDir);
+				return tx.complete;
+			});
+		},
+		getSpecificRoute: function(routeId, dir) {
+			var database = this.getDatabase();
+			if(!database) return;
+
+			var shortDir = 'N';
+			if(parseInt(dir) !== 0) shortDir = 'S';
+			return database.then(function(db) {
+				var tx = db.transaction('selectedRoute', 'readwrite');
+				var store = tx.objectStore('selectedRoute');
+				return store.get(routeId + shortDir);
+			});
+		},
+		saveSpecificRoute: function(routeId, dir, sortedTrips) {
+			var database = this.getDatabase();
+
+			if(!database) return;
+
+			var shortDir = 'N';
+			if(parseInt(dir) !== 0) shortDir = 'S';
+			return database.then(function(db) {
+				var tx = db.transaction('selectedRoute', 'readwrite');
+				var store = tx.objectStore('selectedRoute');
+				var fullRoute = {route_id: routeId, trips: sortedTrips};
+				return store.put(fullRoute, routeId + shortDir);
 			});
 		}
 	};

@@ -34,7 +34,7 @@
     "ejs": "^2.3.4",
     "express": "^4.13.3",
     "express-session": "^1.13.0",
-    "gtfs": "^0.4.4",
+    "gtfs": "^0.4.6",
     "gulp": "^3.9.0",
     "gulp-babel": "^6.1.2",
     "gulp-concat": "^2.6.0",
