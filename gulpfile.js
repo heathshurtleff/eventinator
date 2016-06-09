@@ -10,7 +10,7 @@ var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var babel = require('gulp-babel');
 
-gulp.task('default', ['vendorcss', 'scss', 'vendorjs', 'js', 'setupGtfsConfig'], function() {});
+gulp.task('default', ['vendorcss', 'sass', 'vendorjs', 'js', 'setupGtfsConfig'], function() {});
 
 gulp.task('serve', function() {
 	var server = gls.new('server.js');
