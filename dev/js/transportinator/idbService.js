@@ -305,9 +305,14 @@ angular.module('transportinator').factory('idbService', function() {
 			if(!navigator.serviceWorker) {
 				return;
 			}
-			return idb.open('transport', 1, function(upgradeDb) {
+			return idb.open('transport', 6, function(upgradeDb) {
 				switch (upgradeDb.oldVersion) {
 				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
 					upgradeDb.createObjectStore('routes');
 					upgradeDb.createObjectStore('selectedRoute');
 					upgradeDb.createObjectStore('routeStops');
